@@ -1,0 +1,57 @@
+CMPUT 275 FINAL PROJECT PROPOSAL V3
+BY: NAVRAS KAMAL (1505463) & JESSE GOERTZEN (1505959)
+
+PROJECT NAME: EXPOSURE COIN (EXP COIN)
+
+GENERAL DESCRIPTION: This will be a proof of concept project more than a fully functioning cyptocurrency (however if it is possible to achieve this it would be ideal).  The basic structure of the project will be a blockchain currency similar to Bitcoin and Etherium, built in Python.  The project will be heavily based in object oriented programming, one of the major goals of this course, and will include elements of encryption and data transfers which incorporates knowledge from both 274 and 275.  The mining of the coin will require algorithmic practices to run at with a running time such that the coins can be mined at a rate that encourages growth without causing inflation.  This will demonstrate the major elements of the course in a novel and currently relevant way.  Details of each step can be found below.
+
+MILESTONES: 
+1) MARCH 19
+ - Create the basic coin architecture
+     - The "coins" are blocks of data which will be objects that contain data about their index, their time of creation, the previous block's cryptographic hash, their current hash and other information that may be added as we proceed with the project.  The hashes will likely be computed with an implementation of SHA256.
+ - Create the basic blockchain architecture
+     - The blockchain is the system that links the blocks together.  It starts out with a custom made "Genesis Block" which is the first block in the chain, and is usually built with special rules.  Then the "coin" and transaction blocks are added to this chain and are built based on data from previous elements in the chain.  This will likely be implemented with a Python list at this phase.  Essentially this is a ledger of transactions and currency creation all the way back to the inception of the chain, and it's information is implicitly included inside each transaction and creation.
+DEMO: Show that the objects are containing the correct data and the chain is being handled appropriately (likely with DOCSTRING tests)
+
+2) MARCH 26
+ - Basic GUI
+     - We will design a graphical user interface that will make it easier to read, modify and control the blockchain more easily.  This will include functions for handling different users with different permissions, the ability to view your balance and the ability to add blocks to the chain more intuitively, which will make the project more demoable.  This will likely be built with the aid of some kind of library, but the actual implementation isn't yet certain.
+ - User logins
+     - Different users will have a set of permissions that will allow some to create coins and each user will have their data such as their balance associated with their account.  Users will be stored as objects in a database with values such as their balance, their anonymous ID number, their encrypted login information and the list of coins they own (based on the hashes of the coins).
+ - Blockchain control by users
+     - Users will be able to create coins just to demonstrate that the building of the chain works as intended.  Coins are not actually mined or transferred at this stage.
+ - Persistent storage of blockchain state
+     - This means that if the main program is terminated it will store an encrypted file which preserves the state of the blockchain which can be restored on resuming it.  This is important as it ensures that if the host goes down the ledger is not lost, as the decentralization of the currency is not a primary milestone of the project.  This phase will also include the program taking emergency backups at certain intervals in the case of a crash.  
+DEMO: Users can log into accounts through the GUI and create coins, and the data is backed up even when the program is not running.  Note that coins are not mined or transferred at this stage and this is still very much in the proof of concept phase
+
+3) APRIL 2
+ - Mining coins with proof of work
+     - The process of mining coins is a process that involves algorithmic efficiency and encryption.  When a user is wanting to mine a coin they need to give a "Proof of Work".  This allows the economy to grow over time, but it needs to be controlled to reduce inflation.  Essentially when a new block is going to be added to a chain instead of automatically being encrypted, all the miners try many different combinations of values such that the hashed value of the new coin follows a specific set of rules.  These rules can be something like "the hash must start with 10 zeros" or "the hash must be odd" and each one of these will take a different amount of time on average to process.  In addition, it is possible to make a custom algorithm with a specialized running time to further control the speed, such as a program that runs at O(n^2) to slow progress and fine tune the rate of work.  Once the miner creates the valid sequence it is broadcast to all other users and they are granted some currency as a reward or bounty on the block.  This bounty can be either generated upon transaction, thus increasing the overall amount of currency, or be skimmed from a transaction as a "fee" which keeps inflation at bay.   
+ - Transferring currency between users
+     - This will be the first major step to the implementation of this being a currency more than just a series of arbitrary values.  This will be implemented by setting up the transaction blocks on the blockchain which will track any changes in who the current holder of the blocks of currency currently are.  As this is a new currency there will likely not be a transaction fee but rather a bounty added to these transactions automatically, as the goal at this point would be to grow the size and amount of currency among users.
+DEMO: Proof that the mining system works as intended to generate currency, and proof that currency is being transferred between users through the GUI
+
+4) APRIL 9
+ - Fraud checking 
+     - This would be done by creating a method that will check over the multiple chains of data given by each user in order to verify that the transaction is valid, usually by seeing which chain has the largest number of approved transactions.  In addition this phase will make it so that a transaction is held in "limbo" for a period of time until it either expires or is confirmed by both parties, at which point it will be encoded / mined and added to the blockchain.
+ - Public private ledger
+     - Sounds like a bit of a contradiction, but basically a publicly viewable ledger which contains a list of transactions and their amounts but does not display any information about the users who performed these transactions.  These values can be collected and graphed using python's graphing functions to give visual data showing off the movement of currency
+ - Any stretch goals we are able to achieve
+DEMO: Proof that the encryption works by trying to intercept and modify data, proof that the system rejects false transactions, authentication system for members of transaction, showing graphs generated by the program.  Any stretch goals achieved will add their demo here as well.
+
+STRETCH GOALS: 
+NOTE: Order is from easiest or most likely to implement to least likely to be able to implement in the given time
+ - More secure login 
+     - Create a more robust system for handling user information and the way for people to access and modify their digital wallets.
+    DEMO: Login system is likely to just be bare bones for base project as it is more of a proof of concept, but if it can be improved to be more secure it will be, though it is not a priority of the project
+ - Better user interface
+     - More intuitive buttons, more visually pleasing, likely web based interface
+    DEMO: The user experience is improved and functionality is intuitive and secure
+ - Compressed transfers
+     - Using a compression algorithm to decrease the size of data stored locally and of data that needs to be transferred between users, which will theoretically reduce the network and disk load of using EXP Coin, however this will require some testing as it is possible that this would have a negligible impact on performance overall.
+    DEMO: Proof that the size of transferred data is smaller than it was before
+ - Decentralized web server
+     - One of the major features of a cryptocurrency is that it is not controlled by a country or a bank, but is decentralized and controlled by the users.  The system allows for privacy and anonymity while also keeping data away from any single user.  This step would make the system more realistic in terms of being an actual cryptocurrency, however it is not really in the scope of this class, and as this is more of a proof of concept we way not implement it.  
+    DEMO: Show that the system is not hosted on a single device but is accessible to any user to an equal measure
+
+MARCH 15, 2018
