@@ -10,7 +10,7 @@ Create consensus block chain.  This will be a list of transactions which when fo
 Create transaction tree.  This will be a tree object which will take in all the incoming transactions and will be used to determine what to add to block chain
 '''
 
-userID = 123456789 #Not sure how to handle this yet but it's super important... it will track your owned currency and your actions
+userID = str(input()) #Not sure how to handle this yet but it's super important... it will track your owned currency and your actions
 
 class Genesis():
     def __init__(self, index, origin_time, timestamp, data, hash):
