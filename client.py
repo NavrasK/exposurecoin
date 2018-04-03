@@ -6,28 +6,31 @@ import random
 userid = None
 logged_in = False
 
-while True:
+while not logged_in:
     have_account = str(input("Do you already have an account? (Y/N)\n"))
-    if have_account == 'N':
-        uname = str(input("Enter a username:"))
+
+    if have_account == 'N' or have_account == 'n':
+        uname = str(input("Enter a username:")).rstrip()
         while True:
-            pword = str(input("Enter a password:"))
-            pword_confirm = str(input("Confirm Password:"))
+            pword = str(input("Enter a password:")).rstrip()
+            pword_confirm = str(input("Confirm Password:")).rstrip()
             if not (pword == pword_confirm):
                 print("PASSWORDS DO NOT MATCH!")
                 continue
             else:
                 break
         sha256 = hasher.sha256()
-        sha256.update(uname+pword)
+        sha256.update((uname+pword).encode('utf-8'))
         credentials = sha256.hexdigest()
         i = 0
         with open('usrdata.txt', mode='r') as file:
             for line in file:
+                line = line.rstrip('\n')
+                i += 1
                 if logged_in:
                     userid = line
                     break
-                elif not (i%2):
+                elif i % 2:
                     if credentials == line:
                         print("ACCOUNT ALREADY EXISTS!")
                         print("LOGGING IN")
@@ -38,33 +41,42 @@ while True:
             idkey = ''
             for _ in range(random.randint(40,100)):
                 idkey.join(str(random.randint(0,9)))
-            sha256.update(uname+pword+idkey)
+            sha256.update((uname+pword+idkey).encode('utf-8'))
             uid = sha256.hexdigest()
-            with open('usrdata.txt', mode='a'):
+            with open('usrdata.txt', mode='w') as file:
                 file.write(credentials)
+                file.write('\n')
                 file.write(uid)
                 file.close()
             logged_in = True
             userid = uid
         break
-    if have_account == 'Y':
+
+    if have_account == 'Y' or have_account == 'y' and not logged_in:
         while not logged_in:
-            uname = str(input("USERNAME:"))
-            pword = str(input("PASSWORD:"))
+            uname = str(input("USERNAME:")).rstrip()
+            pword = str(input("PASSWORD:")).rstrip()
             sha256 = hasher.sha256()
-            sha256.update(uname+pword)
+            sha256.update((uname+pword).encode('utf-8'))
             credentials = sha256.hexdigest()
             i = 0
             with open('usrdata.txt', mode='r') as file:
                 for line in file:
+                    line = line.rstrip('\n')
+                    i += 1
                     if logged_in:
                         userid = line
                         break
-                    elif not (i%2):
+                    elif i % 2:
                         if credentials == line:
                             logged_in = True
+                            print("LOGGED IN!")
                 file.close()
             if not logged_in:
                 print("USER NOT FOUND!")
+
     else:
         print("INVALID INPUT")
+
+print("Program continues...")
+print("USER: " + userid)
