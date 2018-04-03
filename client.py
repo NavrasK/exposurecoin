@@ -2,6 +2,7 @@
 
 import hashlib as hasher
 import random
+import os
 
 userid = None
 logged_in = False
@@ -43,9 +44,10 @@ while not logged_in:
                 idkey.join(str(random.randint(0,9)))
             sha256.update((uname+pword+idkey).encode('utf-8'))
             uid = sha256.hexdigest()
-            with open('usrdata.txt', mode='w') as file:
-                file.write(credentials)
-                file.write('\n')
+            with open('usrdata.txt', mode='a') as file:
+                if os.stat('usrdata.txt').st_size:
+                    file.write('\n')
+                file.write(credentials+'\n')
                 file.write(uid)
                 file.close()
             logged_in = True
@@ -74,6 +76,9 @@ while not logged_in:
                 file.close()
             if not logged_in:
                 print("USER NOT FOUND!")
+                try_again = str(input("Enter Y to try again\n"))
+                if not(try_again == 'y' or try_again == 'Y'):
+                    break
 
     else:
         print("INVALID INPUT")
