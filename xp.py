@@ -1,3 +1,5 @@
+# The main architechture of the blockchain system
+
 import hashlib as hasher #for SHA256
 import time as timer #UNIX time, since actual date/time is irrellevant compared to relative time
 import random
@@ -36,7 +38,7 @@ class XP(): #The blocks in the chain are called XP
                     return test_hash
     def hash_xp(self):
         sha256 = hasher.sha256()
-        sha256.update(str(self.index) + str(self.timestamp) + str(self.data) + str(self.previous_hash) + str(self.getNonce(random.randint(7,10))))
+        sha256.update(str(self.index) + str(self.timestamp) + str(self.data) + str(self.previous_hash) + str(self.getNonce(random.randint(40,50))))
         return sha256.hexdigest()
     def getNonce(self, len):
         nonce = ''

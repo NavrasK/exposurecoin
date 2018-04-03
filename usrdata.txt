@@ -1,1 +1,3 @@
-USER ID: VALUE
+Encrypted storage of user login information their ID
+UNAME:PWORD
+ID
