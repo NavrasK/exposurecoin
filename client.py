@@ -3,7 +3,7 @@
 import hashlib as hasher
 import os
 import random
-from tkinter import * # noqa # pylint: disable=unused-import
+from tkinter import * 
 
 def terminal_authenticate():
     userid = None
