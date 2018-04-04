@@ -92,11 +92,3 @@ class ClientApp(Frame):
 
     def create_user(self):
         print("create account")
-
-root = Tk()
-root.title("TEST WINDOW")
-root.config(height = 400, width = 500)
-
-app = ClientApp(root)
-
-root.mainloop()

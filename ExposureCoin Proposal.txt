@@ -61,3 +61,4 @@ https://bitcoin.org/bitcoin.pdf
 https://medium.com/crypto-currently/lets-build-the-tiniest-blockchain-e70965a248b 
 https://medium.com/crypto-currently/lets-make-the-tiniest-blockchain-bigger-ac360a328f4d 
 https://wiki.python.org/moin/GuiProgramming 
+https://www.youtube.com/watch?v=ic3__PoSq-4 
