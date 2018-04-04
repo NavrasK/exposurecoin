@@ -1,8 +1,9 @@
 # The GUI for the client interface
 
 import hashlib as hasher
-import random
 import os
+import random
+from tkinter import * # noqa # pylint: disable=unused-import
 
 def terminal_authenticate():
     userid = None
@@ -86,7 +87,17 @@ def terminal_authenticate():
     return userid
 
 def main():
-    print("WELCOME USER " + terminal_authenticate()[:9] + "(...)")
+    root = Tk()
+    root.geometry("500x400")
+    
+    frame = Frame(root)
+    frame.grid()
+    root.title("TESTING")
+
+    
+
+    root.mainloop()
+    # print("WELCOME USER " + terminal_authenticate()[:9] + "(...)")
 
 if __name__ == "__main__":
     main()
