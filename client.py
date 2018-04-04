@@ -3,11 +3,6 @@
 import hashlib as hasher
 import random
 import os
-from flask import Flask
-app = Flask(__name__)
-@app.route("/")
-def test_flask():
-    return "TEST SUCCESS"
 
 def terminal_authenticate():
     userid = None
@@ -88,6 +83,10 @@ def terminal_authenticate():
 
         else:
             print("INVALID INPUT")
+    return userid
 
-    print("Program continues...")
-    print("USER: " + userid)
+def main():
+    print("WELCOME USER " + terminal_authenticate()[:9] + "(...)")
+
+if __name__ == "__main__":
+    main()
