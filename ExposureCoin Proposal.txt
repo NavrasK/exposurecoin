@@ -56,6 +56,10 @@ NOTE: Order is from easiest or most likely to implement to least likely to be ab
 
 MARCH 15, 2018
 
+PREREQUISITES:
+install pyyaml with "$ pip install pyyaml"
+create a pastebin account and get your dev API key
+
 REFERENCES: 
 https://bitcoin.org/bitcoin.pdf 
 https://medium.com/crypto-currently/lets-build-the-tiniest-blockchain-e70965a248b 
