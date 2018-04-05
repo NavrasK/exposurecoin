@@ -11,6 +11,7 @@ class User():
         pk = None
         sk = None
         uname = None
+
     def encrypt(self, *args):
         s = ''
         for i in args:
@@ -18,6 +19,7 @@ class User():
         sha256 = hasher.sha256()
         sha256.update((s).encode('utf-8'))
         return sha256.hexdigest()
+
     def login(self, uname, pword):
         credentials = self.encrypt(uname, pword)
         self.logged_in = False
@@ -28,7 +30,6 @@ class User():
                 i += 1
                 if self.logged_in:
                     return line #User ID
-                    break
                 elif i % 2:
                     if credentials == line:
                         self.logged_in = True
@@ -36,11 +37,10 @@ class User():
             file.close()
         if not self.logged_in:
             raise ValueError("CREDENTIALS NOT FOUND")
-            return None
+
     def create(self, uname, pword, pword_confirm):
             if not (pword == pword_confirm):
                 raise ValueError("PASSWORDS DO NOT MATCH")
-                return None
             else:
                 self.logged_in = False
                 credentials = self.encrypt(uname, pword)
@@ -70,7 +70,7 @@ class User():
                     self.logged_in = True
                     return uid
 
-
+# Legacy code (for reference)
 def terminal_authenticate():
     userid = None
     logged_in = False

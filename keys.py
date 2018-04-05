@@ -7,6 +7,7 @@ class publicKeys():
     def __init__(self):
         keys = {}
         self.refreshKeys()
+
     def refreshKeys(self):
         self.keys = {}
         k = {}
@@ -17,6 +18,7 @@ class publicKeys():
                     k[uid] = pk
             file.close()
         return k
+
     def generateKeyPair(self, uid):
         pk = '' #publickey
         sk = '' #secret/privatekey
