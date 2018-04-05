@@ -6,19 +6,18 @@ import hashlib as hasher
 import random
 from encryption_ import Keys
 
-k = Keys()
-
 class User():
     def __init__(self):
-        userID = None
-        localBalance = None
-        logged_in = False
-        pk = None
-        sk = None
-        uname = None
+        self.userID = None
+        self.localBalance = None
+        self.logged_in = False
+        self.pk = None
+        self.sk = None
+        self.uname = None
+        self.k = Keys()
 
     def login(self, uname, pword):
-        credentials = k.encrypt(uname, pword)
+        credentials = self.k.encrypt(uname, pword)
         self.logged_in = False
         i = 0
         with open('usrdata.txt', mode='r') as file:
@@ -31,7 +30,6 @@ class User():
                     if credentials == line:
                         self.logged_in = True
                         print("LOGGED IN!")
-            file.close()
         if not self.logged_in:
             raise ValueError("CREDENTIALS NOT FOUND")
 
@@ -40,7 +38,7 @@ class User():
                 raise ValueError("PASSWORDS DO NOT MATCH")
             else:
                 self.logged_in = False
-                credentials = k.encrypt(uname, pword)
+                credentials = self.k.encrypt(uname, pword)
                 i = 0
                 with open('usrdata.txt', mode='r') as file:
                     for line in file:
@@ -53,15 +51,13 @@ class User():
                                 print("ACCOUNT ALREADY EXISTS!")
                                 print("LOGGING IN")
                                 self.logged_in = True
-                    file.close()
                 if not self.logged_in:
                     print("CREATING ACCOUNT")
-                    idkey = k.generate_nonce(2048)
-                    uid = k.encrypt(uname, pword, idkey)
+                    idkey = self.k.generate_nonce(2048)
+                    uid = self.k.encrypt(uname, pword, idkey)
                     with open('usrdata.txt', mode='a') as file:
                         file.write(credentials+'\n')
                         file.write(uid+'\n')
-                        file.close()
                     self.logged_in = True
                     return uid
 
@@ -99,7 +95,6 @@ def terminal_authenticate():
                             print("ACCOUNT ALREADY EXISTS!")
                             print("LOGGING IN")
                             logged_in = True
-                file.close()
             if not logged_in:
                 print("CREATING ACCOUNT")
                 idkey = ''
@@ -110,7 +105,6 @@ def terminal_authenticate():
                 with open('usrdata.txt', mode='a') as file:
                     file.write(credentials+'\n')
                     file.write(uid+'\n')
-                    file.close()
                 logged_in = True
                 userid = uid
             break
@@ -134,7 +128,6 @@ def terminal_authenticate():
                             if credentials == line:
                                 logged_in = True
                                 print("LOGGED IN!")
-                    file.close()
                 if not logged_in:
                     print("USER NOT FOUND!")
                     try_again = str(input("Enter Y to try again\n"))

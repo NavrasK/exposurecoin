@@ -10,7 +10,7 @@ from server_ import Server
 
 class Keys():
     def __init__(self):
-        keys = {}
+        self.keys = {}
         self.refreshKeys()
 
     def encrypt(self, *args):
@@ -35,7 +35,6 @@ class Keys():
                 uid, pk = line.rstrip().split(':')
                 if uid not in k:
                     k[uid] = pk
-            file.close()
         return k
 
     def generateKeyPair(self, uid):
@@ -44,19 +43,15 @@ class Keys():
         if not os.path.isfile("EXPkey.txt"):
             with open("EXPkey.txt", mode='a') as file:
                 file.write(sk)
-                file.close()
             with open('publicKeys.txt', mode='a') as file:
                 file.write(uid + ":" + pk + "\n")
-                file.close()
         else:
             if ClientApp.overwrite_key_confirm(ClientApp):
                 with open("EXPkey.txt", mode="w") as file:
                     file.truncate(0)
                     file.write(sk)
-                    file.close()
                 with open('publicKeys.txt', mode='a') as file:
                     file.write(uid + ":" + pk + "\n")
-                    file.close()
                 print("Deleted and Replaced")
             else:
                 print("Not Deleted, process aborted")

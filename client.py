@@ -16,7 +16,7 @@ def main():
     user = User()
     app = gui(master=root)
     net = Network()
-    s = Server("https://www.pastebin.com/")
+    s = Server("https://pastebin.com/")
 
     root.title("TEST WINDOW")
     root.config(height = 400, width = 500)

@@ -86,7 +86,6 @@ class ClientApp(tk.Frame):
                     if credentials == line:
                         logged_in = True
                         print("LOGGED IN!")
-            file.close()
         if not logged_in:
             self.terminal_text["text"] = "INVALID CREDENTIALS"
 

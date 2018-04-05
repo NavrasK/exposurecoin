@@ -7,12 +7,10 @@
 from pastebin import PasteBin as pbAPI
 import yaml
 
-URL = None
-extension = None
-
 class Server():
     def __init__(self, url):
-        URL = url
+        self.URL = url
+        self.extension = {}
 
     def get_pastebin_username(self):
         with open("credentials.yaml", "r") as file:
@@ -49,13 +47,19 @@ class Server():
         api = pbAPI(dev_key, user_key)
         return api
 
-    def create_paste(self, api, filename, title):
-        data = open(filename).read()
+    def create_paste(self, api, filename, title, filetype):
+        data = ''
+        with open(filename) as file:
+            data = file.read()
         newURL = api.paste(data, guest=True, name=title, format=None, private=1, expire=None)
+        self.extension[filetype] = str(newURL).replace(self.URL, "")
         return newURL
 
+    def read_paste(self, api, ext):
+        print('fuckoffS')
+
 if __name__ == "__main__":
-    s = Server("https://www.pastebin.com/")
+    s = Server("https://pastebin.com/")
     uname = s.get_pastebin_username()
     if not uname:
             uname = input("Enter your username:")
@@ -65,4 +69,5 @@ if __name__ == "__main__":
             pword = input("Enter your password:")
             pword = pword.rstrip()
     api = s.create_api(uname, pword)
-    print(s.create_paste(api, "test.txt","TESTINGTESTING123"))
+    print(s.create_paste(api, "test.txt","TESTINGTESTING123", "test"))
+    print("ext:" + s.extension["test"])
