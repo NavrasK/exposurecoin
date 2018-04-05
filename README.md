@@ -1,9 +1,11 @@
 # exposurecoin
 Python based blockchain proof of concept cyptocurrency
 
+
 BACKGROUND:
 
 This is a cryptocurrency that can be used in a relatively small group of people who make multiple transactions in bursts.  For example if you are betting on horse races in an illegal gambling ring.  You could use this crypto to handle bets during the event, then settle up at the end, or keep the program running for the next time there is a couple races.  That way the transactions are more secret and dirty money doesn't exchange hands until the end.  From this background there is some assumptions that can be made.
+
 
 ASSUMPTIONS:
  - There is a relatively small number of users
@@ -15,15 +17,18 @@ ASSUMPTIONS:
  - Players want to remain anonymous
  - This is a proof of concept, not a fully fledged cryptocurrency
 
+
 CONVENTIONS:
 
 External class files are named as "name_.py" in all lowercase
+
 
 PREREQUISITES:
 
 install pyyaml with "$ pip install pyyaml"
 
 create a pastebin account and get your dev API key
+
 
 CREDITS: 
 
