@@ -4,15 +4,16 @@
 
 # Note that the current test generates a new paste every time this is run
 
-from pastebin import PasteBin as pbAPI
-from networking_ import Network
 import yaml
 import urllib
-from bs4 import BeautifulSoup as soupify
+from pastebin_ import PasteBin as pbAPI
+from networking_ import Network
+from pastebinparser_ import PasteFetcher
 
 class PastebinHandler():
     def __init__(self):
         self.net = Network()
+        self.pasteparser = PasteFetcher()
         self.URL = "https://pastebin.com/"
         self.raw = "https://pastebin.com/raw/"
         self.extension = {}
@@ -61,34 +62,20 @@ class PastebinHandler():
         return newURL
 
     def read_paste(self, api, filename): #raw address giving HTML not TXT
-        ext = "ecYsn5zd"
-        # ext = self.extension[filename]
-        # data = urllib.request.urlopen(self.raw + ext)
-        # data = str(data.encode())
-        # with open("readintest.txt", 'w+') as file:
-        #     file.truncate(0)
-        #     for line in data:
-        #         file.write(str(line.rstrip().decode()))
-        data = api.raw_pastes(ext)
-        text = self.parse_HTML(data)
-        return text
-    
-    def parse_HTML(self, html):
-        soup = soupify(html, "html.parser")
-        print(soup)
-        text = soup.body.get_text()
-        return text
+        ext = self.extension[filename]
+        data = self.pasteparser.parse_paste(ext)
+        return data
 
 if __name__ == "__main__":
     pbh = PastebinHandler()
     uname = pbh.get_pastebin_username()
     if not uname:
-            uname = input("Enter your username:")
-            uname = uname.rstrip()
+        uname = input("Enter your username:")
+        uname = uname.rstrip()
     pword = pbh.get_pastebin_password()
     if not pword:
-            pword = input("Enter your password:")
-            pword = pword.rstrip()
+        pword = input("Enter your password:")
+        pword = pword.rstrip()
     api = pbh.create_api(uname, pword)
     # print(s.create_paste(api, "test.txt","TESTINGTESTING123", "test"))
     # print("ext:" + s.extension["test"])
