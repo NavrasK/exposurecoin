@@ -6,8 +6,11 @@ from user import User
 from GUI import ClientApp
 from keys import publicKeys
 
+#Global Vars:
+root = tk.Tk()
+
 def main():
-    root = tk.Tk()
+    
     root.title("TEST WINDOW")
     root.config(height = 400, width = 500)
 
@@ -21,7 +24,7 @@ def main():
 def initialize():
     pkeys = publicKeys()
     u = User()
-    #app = ClientApp()
+    app = ClientApp(master=root)
     main() 
 
 if __name__ == "__main__":
