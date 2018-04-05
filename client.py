@@ -5,11 +5,17 @@ import tkinter as tk
 from user_ import User
 from GUI import ClientApp as cApp
 from keys import publicKeys
-
-#Global Vars:
-root = tk.Tk()
+from server import Server
 
 def main():
+    root = tk.Tk()
+
+    # Initialize
+    pkeys = publicKeys()
+    user = User()
+    app = cApp(master=root)
+    s = Server()
+
     root.title("TEST WINDOW")
     root.config(height = 400, width = 500)
 
@@ -20,11 +26,5 @@ def main():
     publicKeys.generateKeyPair(publicKeys, "ABC123")
     publicKeys.refreshKeys(publicKeys)
 
-def initialize():
-    pkeys = publicKeys()
-    user = User()
-    app = cApp(master=root)
-    main() 
-
 if __name__ == "__main__":
-    initialize()
+    main()
