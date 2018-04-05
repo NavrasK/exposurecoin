@@ -1,3 +1,9 @@
+# Handles storing and retrieving data from pastebin
+
+# TODO: Build pastebin data reader and properly store generated URLs
+
+# Note that the current test generates a new paste every time this is run
+
 from pastebin import PasteBin as pbAPI
 import yaml
 

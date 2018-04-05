@@ -1,4 +1,6 @@
-# The GUI version of the client, will replace client.py eventually
+# The GUI for the client
+
+# TODO: Nuke it and start over from the top
 
 import hashlib as hasher
 import os

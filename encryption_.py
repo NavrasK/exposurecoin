@@ -1,9 +1,13 @@
+# Handles most of the encryption
+
+# TODO: Make the generateKeyPair properly write to file and fix the popup window, move all encryption tasks here
+
 import os
 import random
-from GUI import ClientApp
-from server import Server
+from gui_ import ClientApp
+from server_ import Server
 
-class publicKeys():
+class Keys():
     def __init__(self):
         keys = {}
         self.refreshKeys()
@@ -25,8 +29,6 @@ class publicKeys():
         for _ in range(2048):
             pk += (str(random.randint(0,1)))
             sk += (str(random.randint(0,1)))
-        print(pk)
-        print(sk)
         if not os.path.isfile("EXPkey.txt"):
             with open("EXPkey.txt", mode='a') as file:
                 file.write(sk)
@@ -46,3 +48,8 @@ class publicKeys():
                 print("Deleted and Replaced")
             else:
                 print("Not Deleted, process aborted")
+        self.refreshKeys()
+
+if __name__ == "__main__":
+    k = Keys()
+    k.generateKeyPair("TESTINGTESTINGTESTING")

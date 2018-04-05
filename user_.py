@@ -1,7 +1,10 @@
-# The GUI for the client interface
+# Functions related to the creation and handling of users
+
+# TODO: fix account creation, test, then remove legacy code, and move encryption tasks to keys_
 
 import hashlib as hasher
 import random
+from encryption_ import Keys
 
 class User():
     def __init__(self):
