@@ -1,9 +1,26 @@
 from pastebin import PasteBin as pbAPI
 import yaml
 
+URL = None
+extension = None
+
 class Server():
-    def __init__(self):
-        url1 = "idk"
+    def __init__(self, url):
+        URL = url
+
+    def get_pastebin_username(self):
+        with open("credentials.yaml", "r") as file:
+            data = yaml.load(file)
+        pb = data.get('pastebin')
+        uname = pb.get('username')
+        return uname
+
+    def get_pastebin_password(self):
+        with open("credentials.yaml", "r") as file:
+            data = yaml.load(file)
+        pb = data.get('pastebin')
+        pword = pb.get('password')
+        return pword
 
     def get_pastebin_dev_key(self):
         with open("credentials.yaml", "r") as file:
@@ -32,8 +49,14 @@ class Server():
         return newURL
 
 if __name__ == "__main__":
-    s = Server()
-    uname = input("username:")
-    pword = input("password:")
+    s = Server("https://www.pastebin.com/")
+    uname = s.get_pastebin_username()
+    if not uname:
+            uname = input("Enter your username:")
+            uname = uname.rstrip()
+    pword = s.get_pastebin_password()
+    if not pword:
+            pword = input("Enter your password:")
+            pword = pword.rstrip()
     api = s.create_api(uname, pword)
     print(s.create_paste(api, "test.txt","TESTINGTESTING123"))
