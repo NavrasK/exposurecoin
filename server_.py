@@ -6,9 +6,11 @@
 
 from pastebin import PasteBin as pbAPI
 import yaml
+from networking_ import Network
 
 class Server():
     def __init__(self, url):
+        self.net = Network()
         self.URL = url
         self.extension = {}
 
