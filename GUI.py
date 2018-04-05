@@ -3,42 +3,42 @@
 import hashlib as hasher
 import os
 import random
-from tkinter import *
+import tkinter as tk
 
-class ClientApp(Frame):
+class ClientApp(tk.Frame):
     def __init__(self, master):
-        Frame.__init__(self, master)
+        tk.Frame.__init__(self, master)
         self.grid()
         self.create_elements()
         self.display_login_main()
         self.logged_in = False
 
     def create_elements(self):
-        self.main_text = Label(self, text="Welcome to the EXPcoin Client")
-        self.terminal_text = Label(self, text="")
-        self.uname_prompt = Label(self, text="ENTER USERNAME")
-        self.pword_prompt = Label(self, text="ENTER PASSWORD")
-        self.pword_confirm_prompt = Label(self, text="CONFIRM PSSWRD")
+        self.main_text = tk.Label(self, text="Welcome to the EXPcoin Client")
+        self.terminal_text = tk.Label(self, text="")
+        self.uname_prompt = tk.Label(self, text="ENTER USERNAME")
+        self.pword_prompt = tk.Label(self, text="ENTER PASSWORD")
+        self.pword_confirm_prompt = tk.Label(self, text="CONFIRM PSSWRD")
 
-        self.uname_entry = Entry(self)
-        self.pword_entry = Entry(self)
-        self.pword_confirm = Entry(self)
+        self.uname_entry = tk.Entry(self)
+        self.pword_entry = tk.Entry(self)
+        self.pword_confirm = tk.Entry(self)
 
-        self.login_button = Button(self, text="LOGIN", command = self.login())
+        self.login_button = tk.Button(self, text="LOGIN", command = self.login())
         # self.create_acct_button = Button(self, text="CREATE ACCOUNT", command = self.create_account())
-        self.create_button = Button(self, text="CREATE ACCOUNT", command = self.create_user())
+        self.create_button = tk.Button(self, text="CREATE ACCOUNT", command = self.create_user())
 
-        self.userid = Text(self, width=30, height=5, wrap=CHAR)
-        self.local_balance = Text(self, width = 30, height=5, wrap=CHAR)
+        self.userid = tk.Text(self, width=30, height=5, wrap=tk.CHAR)
+        self.local_balance = tk.Text(self, width = 30, height=5, wrap=tk.CHAR)
 
     def display_login_main(self):
-        self.main_text.grid(row=0, column=0, sticky=W)
+        self.main_text.grid(row=0, column=0, sticky=tk.W)
 
-        self.uname_prompt.grid(row=1, column=0, sticky=W)
-        self.uname_entry.grid(row=1, column=1, columnspan=4, sticky=W)
+        self.uname_prompt.grid(row=1, column=0, sticky=tk.W)
+        self.uname_entry.grid(row=1, column=1, columnspan=4, sticky=tk.W)
 
-        self.pword_prompt.grid(row=2, column=0, sticky=W)
-        self.pword_entry.grid(row=2, column=2, columnspan=4, sticky=W)
+        self.pword_prompt.grid(row=2, column=0, sticky=tk.W)
+        self.pword_entry.grid(row=2, column=2, columnspan=4, sticky=tk.W)
 
         self.terminal_text.grid(row=3, columnspan=3)
         
@@ -46,16 +46,16 @@ class ClientApp(Frame):
         self.login_button.grid(row=4, column=2)
     
     def display_create_account(self):
-        self.main_text.grid(row=0, column=0, sticky=W)
+        self.main_text.grid(row=0, column=0, sticky=tk.W)
 
-        self.uname_prompt.grid(row=1, column=0, sticky=W)
-        self.uname_entry.grid(row=1, column=1, columnspan=4, sticky=W)
+        self.uname_prompt.grid(row=1, column=0, sticky=tk.W)
+        self.uname_entry.grid(row=1, column=1, columnspan=4, sticky=tk.W)
 
-        self.pword_prompt.grid(row=2, column=0, sticky=W)
-        self.pword_entry.grid(row=2, column=2, columnspan=4, sticky=W)
+        self.pword_prompt.grid(row=2, column=0, sticky=tk.W)
+        self.pword_entry.grid(row=2, column=2, columnspan=4, sticky=tk.W)
 
-        self.pword_confirm_prompt.grid(row=3, column=0, sticky=W)
-        self.pword_confirm.grid(row=3, column=1, columnspan=4, sticky=W)
+        self.pword_confirm_prompt.grid(row=3, column=0, sticky=tk.W)
+        self.pword_confirm.grid(row=3, column=1, columnspan=4, sticky=tk.W)
 
         self.terminal_text.grid(row=4, columnspan=3)
         
@@ -92,3 +92,10 @@ class ClientApp(Frame):
 
     def create_user(self):
         print("create account")
+
+    def overwrite_key_confirm(self):
+        prompt_overwrite = tk.messagebox.askquestion("Overwrite Existing Key?", "WARNING: THIS CANNOT BE UNDONE AND YOU WILL LOSE ACCESS TO DATA RELATED TO THAT ACCOUNT. CHOOSE NO AND BACK UP IF REQUIRED", icon='warning')
+        if prompt_overwrite == 'yes':
+            return True
+        else:
+            return False
