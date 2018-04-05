@@ -1,10 +1,12 @@
 # Functions related to the creation and handling of users
 
-# TODO: fix account creation, test, then remove legacy code, and move encryption tasks to keys_
+# TODO: fix account creation, test, then remove legacy code
 
 import hashlib as hasher
 import random
 from encryption_ import Keys
+
+k = Keys()
 
 class User():
     def __init__(self):
@@ -15,16 +17,8 @@ class User():
         sk = None
         uname = None
 
-    def encrypt(self, *args):
-        s = ''
-        for i in args:
-            s += str(i).rstrip()
-        sha256 = hasher.sha256()
-        sha256.update((s).encode('utf-8'))
-        return sha256.hexdigest()
-
     def login(self, uname, pword):
-        credentials = self.encrypt(uname, pword)
+        credentials = k.encrypt(uname, pword)
         self.logged_in = False
         i = 0
         with open('usrdata.txt', mode='r') as file:
@@ -46,7 +40,7 @@ class User():
                 raise ValueError("PASSWORDS DO NOT MATCH")
             else:
                 self.logged_in = False
-                credentials = self.encrypt(uname, pword)
+                credentials = k.encrypt(uname, pword)
                 i = 0
                 with open('usrdata.txt', mode='r') as file:
                     for line in file:
@@ -62,10 +56,8 @@ class User():
                     file.close()
                 if not self.logged_in:
                     print("CREATING ACCOUNT")
-                    idkey = ''
-                    for _ in range(random.randint(40,100)):
-                        idkey.join(str(random.randint(0,9)))
-                    uid = self.encrypt(uname, pword, idkey)
+                    idkey = k.generate_nonce(2048)
+                    uid = k.encrypt(uname, pword, idkey)
                     with open('usrdata.txt', mode='a') as file:
                         file.write(credentials+'\n')
                         file.write(uid+'\n')

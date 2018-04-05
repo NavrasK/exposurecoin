@@ -6,6 +6,7 @@ from user_ import User
 from gui_ import ClientApp as gui
 from encryption_ import Keys
 from server_ import Server
+from networking_ import Network
 
 def main():
     root = tk.Tk()
@@ -14,6 +15,7 @@ def main():
     keys = Keys()
     user = User()
     app = gui(master=root)
+    net = Network()
     s = Server("https://www.pastebin.com/")
 
     root.title("TEST WINDOW")

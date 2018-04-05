@@ -2,6 +2,7 @@
 
 # TODO: Make the generateKeyPair properly write to file and fix the popup window, move all encryption tasks here
 
+import hashlib as hasher
 import os
 import random
 from gui_ import ClientApp
@@ -11,6 +12,20 @@ class Keys():
     def __init__(self):
         keys = {}
         self.refreshKeys()
+
+    def encrypt(self, *args):
+        s = ''
+        for i in args:
+            s += str(i).rstrip()
+        sha256 = hasher.sha256()
+        sha256.update((s).encode('utf-8'))
+        return sha256.hexdigest()
+
+    def generate_nonce(self, length):
+        s = ''
+        for i in range(length):
+            s += (str(random.randint(0,1)))
+        return s
 
     def refreshKeys(self):
         self.keys = {}
@@ -24,11 +39,8 @@ class Keys():
         return k
 
     def generateKeyPair(self, uid):
-        pk = '' #publickey
-        sk = '' #secret/privatekey
-        for _ in range(2048):
-            pk += (str(random.randint(0,1)))
-            sk += (str(random.randint(0,1)))
+        pk = self.generate_nonce(2048) #publickey
+        sk = self.generate_nonce(2048) #secret/privatekey
         if not os.path.isfile("EXPkey.txt"):
             with open("EXPkey.txt", mode='a') as file:
                 file.write(sk)
