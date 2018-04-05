@@ -1,4 +1,4 @@
-from pastebin import PasteBin as pbapi
+from pastebin import PasteBin as pbAPI
 import yaml
 
 class Server():
@@ -13,15 +13,27 @@ class Server():
         return API_key
 
     def get_pastebin_user_key(self, dev_key, uname, pword):
-        api = pbapi(dev_key)
+        api = pbAPI(dev_key)
         user_key = api.create_user_key(uname,pword)
-        return user_key
+        if 'Bad API request' not in user_key:
+            return user_key
+        else:
+            raise ValueError("INVALID PASTEBIN CREDENTIALS")
+
+    def create_api(self, uname, pword):
+        dev_key = self.get_pastebin_dev_key()
+        user_key = self.get_pastebin_user_key(dev_key, uname, pword)
+        api = pbAPI(dev_key, user_key)
+        return api
+
+    def create_paste(self, api, filename, title):
+        data = open(filename).read()
+        newURL = api.paste(data, guest=True, name=title, format=None, private=1, expire=None)
+        return newURL
 
 if __name__ == "__main__":
-    uname = input()
-    pword = input()
     s = Server()
-    dkey = s.get_pastebin_dev_key()
-    ukey = s.get_pastebin_user_key(dkey, uname, pword)
-    print(dkey)
-    print(ukey)
+    uname = input("username:")
+    pword = input("password:")
+    api = s.create_api(uname, pword)
+    print(s.create_paste(api, "test.txt","TESTINGTESTING123"))
