@@ -3,7 +3,7 @@
 import tkinter as tk
 
 from user_ import User
-from GUI import ClientApp as cApp
+from GUI import ClientApp as gui
 from keys import publicKeys
 from server import Server
 
@@ -13,13 +13,13 @@ def main():
     # Initialize
     pkeys = publicKeys()
     user = User()
-    app = cApp(master=root)
+    app = gui(master=root)
     s = Server()
 
     root.title("TEST WINDOW")
     root.config(height = 400, width = 500)
 
-    app = cApp(root)
+    app = gui(root)
 
     root.mainloop()
 

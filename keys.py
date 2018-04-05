@@ -1,6 +1,7 @@
 import os
 import random
 from GUI import ClientApp
+from server import Server
 
 class publicKeys():
     def __init__(self):
@@ -20,8 +21,8 @@ class publicKeys():
         pk = '' #publickey
         sk = '' #secret/privatekey
         for _ in range(2048):
-            pk.join(str(random.randint(0,1)))
-            sk.join(str(random.randint(0,1)))
+            pk += (str(random.randint(0,1)))
+            sk += (str(random.randint(0,1)))
         print(pk)
         print(sk)
         if not os.path.isfile("EXPkey.txt"):
