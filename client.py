@@ -5,7 +5,7 @@ import tkinter as tk
 from user_ import User
 from gui_ import ClientApp as gui
 from encryption_ import Keys
-from server_ import Server
+from pastebinhandler_ import PastebinHandler
 from networking_ import Network
 
 def main():
@@ -16,7 +16,7 @@ def main():
     user = User()
     app = gui(master=root)
     net = Network()
-    s = Server("https://pastebin.com/")
+    pbh = PastebinHandler()
 
     root.title("TEST WINDOW")
     root.config(height = 400, width = 500)

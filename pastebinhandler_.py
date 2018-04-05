@@ -5,13 +5,15 @@
 # Note that the current test generates a new paste every time this is run
 
 from pastebin import PasteBin as pbAPI
-import yaml
 from networking_ import Network
+import yaml
+import urllib
 
-class Server():
-    def __init__(self, url):
+class PastebinHandler():
+    def __init__(self):
         self.net = Network()
-        self.URL = url
+        self.URL = "https://pastebin.com/"
+        self.raw = "https://pastebin.com/raw/"
         self.extension = {}
 
     def get_pastebin_username(self):
@@ -51,25 +53,34 @@ class Server():
 
     def create_paste(self, api, filename, title, filetype):
         data = ''
-        with open(filename) as file:
+        with open(filename, 'r') as file:
             data = file.read()
         newURL = api.paste(data, guest=True, name=title, format=None, private=1, expire=None)
         self.extension[filetype] = str(newURL).replace(self.URL, "")
         return newURL
 
-    def read_paste(self, api, ext):
-        print('fuckoffS')
+    def read_paste(self, filetype): #raw address giving HTML not TXT
+        #ext = self.extension[filetype]
+        ext = "ecYsn5zd"
+        data = urllib.request.urlopen(self.raw + ext)
+        data = str(data.encode())
+        with open("readintest.txt", 'w+') as file:
+            file.truncate(0)
+            for line in data:
+                file.write(str(line.rstrip().decode()))
+        return data
 
 if __name__ == "__main__":
-    s = Server("https://pastebin.com/")
-    uname = s.get_pastebin_username()
+    pbh = PastebinHandler()
+    uname = pbh.get_pastebin_username()
     if not uname:
             uname = input("Enter your username:")
             uname = uname.rstrip()
-    pword = s.get_pastebin_password()
+    pword = pbh.get_pastebin_password()
     if not pword:
             pword = input("Enter your password:")
             pword = pword.rstrip()
-    api = s.create_api(uname, pword)
-    print(s.create_paste(api, "test.txt","TESTINGTESTING123", "test"))
-    print("ext:" + s.extension["test"])
+    api = pbh.create_api(uname, pword)
+    # print(s.create_paste(api, "test.txt","TESTINGTESTING123", "test"))
+    # print("ext:" + s.extension["test"])
+    print("read:" + pbh.read_paste("test"))
