@@ -9,7 +9,6 @@ class publicKeys():
     def refreshKeys(self):
         self.keys = {}
         k = {}
-        i = 0
         with open('publicKeys.txt', mode='r') as file:
             for line in file:
                 uid, pk = line.rstrip().split(':')

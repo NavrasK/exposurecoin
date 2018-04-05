@@ -95,7 +95,9 @@ class ClientApp(tk.Frame):
         print("create account")
 
     def overwrite_key_confirm(self):
-        prompt_overwrite = tk.messagebox.askyesno("Overwrite Existing Key?", "WARNING: THIS CANNOT BE UNDONE AND YOU WILL LOSE ACCESS TO DATA RELATED TO THAT ACCOUNT. CHOOSE NO AND BACK UP IF REQUIRED", icon='warning')
+        prompt_overwrite = tk.messagebox.askyesno("Overwrite Existing Key?", "WARNING: \
+            THIS CANNOT BE UNDONE AND YOU WILL LOSE ACCESS TO DATA RELATED TO THAT ACCOUNT. \
+            CHOOSE NO AND BACK UP IF REQUIRED", icon='warning')
         if prompt_overwrite == 'yes':
             return True
         else:
