@@ -6,7 +6,7 @@ import hashlib as hasher
 import os
 import random
 from gui_ import ClientApp
-from pastebinhandler_ import PastebinHandler
+from handler_ import PastebinHandler
 
 class Keys():
     def __init__(self):

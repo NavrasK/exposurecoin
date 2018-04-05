@@ -5,7 +5,7 @@ import tkinter as tk
 from user_ import User
 from gui_ import ClientApp as gui
 from encryption_ import Keys
-from pastebinhandler_ import PastebinHandler
+from handler_ import PastebinHandler
 from networking_ import Network
 
 def main():

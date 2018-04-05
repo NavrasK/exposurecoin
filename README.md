@@ -27,6 +27,8 @@ External class files are named as "name_.py" in all lowercase
 
 install pyyaml with "$ pip install pyyaml"
 
+install beautifulsoup with "$ pip install beautifulsoup4"
+
 create a pastebin account and get your dev API key
 
 

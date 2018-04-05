@@ -8,6 +8,7 @@ from pastebin import PasteBin as pbAPI
 from networking_ import Network
 import yaml
 import urllib
+from bs4 import BeautifulSoup as soupify
 
 class PastebinHandler():
     def __init__(self):
@@ -51,24 +52,32 @@ class PastebinHandler():
         api = pbAPI(dev_key, user_key)
         return api
 
-    def create_paste(self, api, filename, title, filetype):
+    def create_paste(self, api, filename, title):
         data = ''
         with open(filename, 'r') as file:
             data = file.read()
         newURL = api.paste(data, guest=True, name=title, format=None, private=1, expire=None)
-        self.extension[filetype] = str(newURL).replace(self.URL, "")
+        self.extension[filename] = str(newURL).replace(self.URL, "")
         return newURL
 
-    def read_paste(self, filetype): #raw address giving HTML not TXT
-        #ext = self.extension[filetype]
+    def read_paste(self, api, filename): #raw address giving HTML not TXT
         ext = "ecYsn5zd"
-        data = urllib.request.urlopen(self.raw + ext)
-        data = str(data.encode())
-        with open("readintest.txt", 'w+') as file:
-            file.truncate(0)
-            for line in data:
-                file.write(str(line.rstrip().decode()))
-        return data
+        # ext = self.extension[filename]
+        # data = urllib.request.urlopen(self.raw + ext)
+        # data = str(data.encode())
+        # with open("readintest.txt", 'w+') as file:
+        #     file.truncate(0)
+        #     for line in data:
+        #         file.write(str(line.rstrip().decode()))
+        data = api.raw_pastes(ext)
+        text = self.parse_HTML(data)
+        return text
+    
+    def parse_HTML(self, html):
+        soup = soupify(html, "html.parser")
+        print(soup)
+        text = soup.body.get_text()
+        return text
 
 if __name__ == "__main__":
     pbh = PastebinHandler()
@@ -83,4 +92,4 @@ if __name__ == "__main__":
     api = pbh.create_api(uname, pword)
     # print(s.create_paste(api, "test.txt","TESTINGTESTING123", "test"))
     # print("ext:" + s.extension["test"])
-    print("read:" + pbh.read_paste("test"))
+    print("read:\n" + pbh.read_paste(api, "test"))
