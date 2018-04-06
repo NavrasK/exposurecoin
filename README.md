@@ -36,4 +36,4 @@ create a pastebin account and get your dev API key
 
 Pastebin API created by AcidVegas (https://www.github.com/acidvegas/pastebin)
 
-Pastebun Parser created by lnus (https://github.com/lnus/pastebin-reader)
+Pastebin Parser created by lnus (https://github.com/lnus/pastebin-reader)
