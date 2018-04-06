@@ -1,6 +1,6 @@
 # Handles inter-computer communication
 
-# TODO: ~~Everything~~, not anymore!
+# TODO: somethings!
 
 # Note the information to be transmitted include at least the ending of new pastebin URLs along with an identifier to show which file is being updated, and a request function which causes all other devices on the network to pass in their stored values
 
@@ -17,8 +17,9 @@ PORT = 50000  # Possible major problem: How do we know what ports each person wi
 # NOTE:
 # Have some function called after a file is recieved that decompresses it and saves with appropriate naming
 
-class Network(self):
-
+class Network():
+    def __init__(self):
+        print("TEMPORARY INITIALIZATION FOR NETWORK")
 
 # class Network1(threading.Thread):
 #     def __init__(self, PORT):

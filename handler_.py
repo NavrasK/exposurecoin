@@ -6,17 +6,15 @@
 
 import yaml
 import urllib
-from pastebin_ import PasteBin as pbAPI
-from networking_ import Network
-from pastebinparser_ import PasteFetcher
+from pastebin import PasteBin as pbAPI
+from pastebinparser import PasteFetcher
 
 class PastebinHandler():
     def __init__(self):
-        self.net = Network()
         self.pasteparser = PasteFetcher()
         self.URL = "https://pastebin.com/"
-        self.raw = "https://pastebin.com/raw/"
         self.extension = {}
+        self.read_backup()
 
     def get_pastebin_username(self):
         with open("credentials.yaml", "r") as file:
@@ -54,17 +52,43 @@ class PastebinHandler():
         return api
 
     def create_paste(self, api, filename, title):
-        data = ''
-        with open(filename, 'r') as file:
-            data = file.read()
-        newURL = api.paste(data, guest=True, name=title, format=None, private=1, expire=None)
-        self.extension[filename] = str(newURL).replace(self.URL, "")
-        return newURL
+        if self.is_changed(api, filename):
+            data = ''
+            with open(filename, 'r') as file:
+                data = file.read()
+            newURL = api.paste(data, guest=True, name=title, format=None, private=1, expire=None)
+            self.extension[filename] = str(newURL).replace(self.URL, "")
+            return newURL
+        else:
+            return self.URL + self.extension[filename]
 
-    def read_paste(self, api, filename): #raw address giving HTML not TXT
+    def read_paste(self, api, filename):
         ext = self.extension[filename]
         data = self.pasteparser.parse_paste(ext)
         return data
+
+    def is_changed(self, api, filename):
+        oldData = self.read_paste(api, filename)
+        newData = ''
+        with open(filename, 'r') as file:
+            newData = file.read()
+        if oldData == newData:
+            return False
+        else:
+            return True
+
+    def update_backup(self):
+        with open("bkup.txt", "w+") as file:
+            file.truncate(0)
+            for i in self.extension:
+                file.write(i+':'+self.extension[i]+'\n')
+
+    def read_backup(self):
+        self.extension = {}
+        with open("bkup.txt", "r") as file:
+            for line in file:
+                name, ext = line.split(':')
+                self.extension[name] = ext
 
 if __name__ == "__main__":
     pbh = PastebinHandler()
@@ -77,6 +101,7 @@ if __name__ == "__main__":
         pword = input("Enter your password:")
         pword = pword.rstrip()
     api = pbh.create_api(uname, pword)
-    # print(s.create_paste(api, "test.txt","TESTINGTESTING123", "test"))
-    # print("ext:" + s.extension["test"])
-    print("read:\n" + pbh.read_paste(api, "test"))
+    print(pbh.create_paste(api, "test.txt","TESTING_TESTING_TESTING"))
+    print("ext:" + pbh.extension["test.txt"])
+    print("read:\n" + pbh.read_paste(api, "test.txt"))
+    pbh.update_backup()
