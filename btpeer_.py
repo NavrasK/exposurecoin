@@ -36,8 +36,10 @@ class BTPeer:
 
         self.maxpeers = int(maxpeers)
         self.serverport = int(serverport)
-        if serverhost: self.serverhost = serverhost
-        else: self.__initserverhost()
+        if serverhost: 
+            self.serverhost = serverhost
+        else: 
+            self.__initserverhost()
 
         if myid: 
             self.myid = myid
