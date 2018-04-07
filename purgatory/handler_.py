@@ -15,23 +15,24 @@ class PastebinHandler():
         self.URL = "https://pastebin.com/"
         self.extension = {}
         self.read_backup()
+        self.file_loc = "textfiles/"
 
     def get_pastebin_username(self):
-        with open("credentials.yaml", "r") as file:
+        with open("textfiles/credentials.yaml", "r") as file:
             data = yaml.load(file)
         pb = data.get('pastebin')
         uname = pb.get('username')
         return uname
 
     def get_pastebin_password(self):
-        with open("credentials.yaml", "r") as file:
+        with open("textfiles/credentials.yaml", "r") as file:
             data = yaml.load(file)
         pb = data.get('pastebin')
         pword = pb.get('password')
         return pword
 
     def get_pastebin_dev_key(self):
-        with open("credentials.yaml", "r") as file:
+        with open("textfiles/credentials.yaml", "r") as file:
             data = yaml.load(file)
         pb = data.get('pastebin')
         API_key = pb.get('pastebin_dev_api')
@@ -54,7 +55,7 @@ class PastebinHandler():
     def create_paste(self, api, filename, title):
         if True: # self.is_changed(api, filename):
             data = ''
-            with open(filename, 'r') as file:
+            with open(self.file_loc+filename, 'r') as file:
                 data = file.read()
             newURL = api.paste(data, guest=True, name=title, format=None, private=1, expire=None)
             self.extension[filename] = str(newURL).replace(self.URL, "")
@@ -70,7 +71,7 @@ class PastebinHandler():
     def is_changed(self, api, filename):
         oldData = self.read_paste(api, filename)
         newData = ''
-        with open(filename, 'r') as file:
+        with open(self.file_loc+filename, 'r') as file:
             newData = file.read()
         if oldData == newData:
             return False
@@ -78,14 +79,14 @@ class PastebinHandler():
             return True
 
     def update_backup(self):
-        with open("bkup.txt", "w+") as file:
+        with open("textfiles/bkup.txt", "w+") as file:
             file.truncate(0)
             for i in self.extension:
                 file.write(i+':'+self.extension[i]+'\n')
 
     def read_backup(self):
         self.extension = {}
-        with open("bkup.txt", "r") as file:
+        with open("textfiles/bkup.txt", "r") as file:
             for line in file:
                 name, ext = line.split(':')
                 self.extension[name] = ext

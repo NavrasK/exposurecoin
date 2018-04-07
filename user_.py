@@ -20,7 +20,7 @@ class User():
         credentials = self.k.encrypt(uname, pword)
         self.logged_in = False
         i = 0
-        with open('usrdata.txt', mode='r') as file:
+        with open("textfiles/usrdata.txt", mode='r') as file:
             for line in file:
                 line = line.rstrip('\n')
                 i += 1
@@ -40,7 +40,7 @@ class User():
                 self.logged_in = False
                 credentials = self.k.encrypt(uname, pword)
                 i = 0
-                with open('usrdata.txt', mode='r') as file:
+                with open("textfiles/usrdata.txt", mode='r') as file:
                     for line in file:
                         line = line.rstrip('\n')
                         i += 1
@@ -55,7 +55,7 @@ class User():
                     print("CREATING ACCOUNT")
                     idkey = self.k.generate_nonce(2048)
                     uid = self.k.encrypt(uname, pword, idkey)
-                    with open('usrdata.txt', mode='a') as file:
+                    with open("textfiles/usrdata.txt", mode='a') as file:
                         file.write(credentials+'\n')
                         file.write(uid+'\n')
                     self.logged_in = True
@@ -83,7 +83,7 @@ def terminal_authenticate():
             sha256.update((uname+pword).encode('utf-8'))
             credentials = sha256.hexdigest()
             i = 0
-            with open('usrdata.txt', mode='r') as file:
+            with open("textfiles/usrdata.txt", mode='r') as file:
                 for line in file:
                     line = line.rstrip('\n')
                     i += 1
@@ -102,7 +102,7 @@ def terminal_authenticate():
                     idkey.join(str(random.randint(0,9)))
                 sha256.update((uname+pword+idkey).encode('utf-8'))
                 uid = sha256.hexdigest()
-                with open('usrdata.txt', mode='a') as file:
+                with open("textfiles/usrdata.txt", mode='a') as file:
                     file.write(credentials+'\n')
                     file.write(uid+'\n')
                 logged_in = True
@@ -117,7 +117,7 @@ def terminal_authenticate():
                 sha256.update((uname+pword).encode('utf-8'))
                 credentials = sha256.hexdigest()
                 i = 0
-                with open('usrdata.txt', mode='r') as file:
+                with open("textfiles/usrdata.txt", mode='r') as file:
                     for line in file:
                         line = line.rstrip('\n')
                         i += 1

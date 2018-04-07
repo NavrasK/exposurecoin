@@ -8,6 +8,7 @@ import hashlib as hasher #for SHA256
 import time as timer #UNIX time, since actual date/time is irrellevant compared to relative time
 import random
 from encryption_ import Keys
+from blockchain_ import WorkingTree
 
 '''
 TODO: 
@@ -22,13 +23,13 @@ userID = str(input()) #Not sure how to handle this yet but it's super important.
 class Genesis():
     def __init__(self, index, origin_time, timestamp, data, hash):
         self.index = 0                      #Genesis block is block with index 0
-        self.origin_time = timer.time()     #Origin time is the actual time when the chain started
-        self.timestamp = 0                  #Time is the relative time from the origin time in seconds
+        self.timestamp = timer.time()       #TODO: Make the time precise to milliseconds, not UNIX time
 
 class XP(): #The blocks in the chain are called XP
     def __init__(self, index, timestamp, data, previous_hash, hash, minted, bounty, minerID):
+        self.tree = WorkingTree()
         self.index = index
-        self.timestamp = timer.time() - AcceptedChain[0].origin_time
+        self.timestamp = timer.time() #TODO: same thing as Genesis
         self.data = data
         self.transactions = {}
         self.previous_hash = previous_hash

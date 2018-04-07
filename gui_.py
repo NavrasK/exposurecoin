@@ -73,7 +73,7 @@ class ClientApp(tk.Frame):
         credentials = sha256.hexdigest()
         logged_in = False
         i = 0
-        with open('usrdata.txt', mode='r') as file:
+        with open("textfiles/usrdata.txt", mode='r') as file:
             for line in file:
                 line = line.rstrip('\n')
                 i += 1
