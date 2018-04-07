@@ -52,7 +52,7 @@ class PastebinHandler():
         return api
 
     def create_paste(self, api, filename, title):
-        if self.is_changed(api, filename):
+        if True: # self.is_changed(api, filename):
             data = ''
             with open(filename, 'r') as file:
                 data = file.read()

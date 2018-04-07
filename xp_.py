@@ -1,8 +1,13 @@
-# The main architechture of the blockchain system
+# The main architechture of the blockchain system.  This includes the block objects which are what is added to the chain as well as the genesis block
+
+# TODO: If you can set it up so Genesis is a sub or superclass of XP that probably hits another note for the class material
+
+# Note: this isn't for the tree, this is just the block object, of which there will be many.  Functions for adding this to the tree can be here, but any more should be in the blockchain_ file
 
 import hashlib as hasher #for SHA256
 import time as timer #UNIX time, since actual date/time is irrellevant compared to relative time
 import random
+from encryption_ import Keys
 
 '''
 TODO: 
@@ -25,29 +30,22 @@ class XP(): #The blocks in the chain are called XP
         self.index = index
         self.timestamp = timer.time() - AcceptedChain[0].origin_time
         self.data = data
+        self.transactions = {}
         self.previous_hash = previous_hash
         self.minted = False
         self.hash = self.grind_xp()
+        self.k = Keys()
     def grind_xp(self):
         while(self.minted == False):
-            test_hash = self.hash_xp()
-            if (test_hash[0]=='a' and test_hash[1]=='b' and test_hash[2]=='c' and test_hash[3]=='1' and test_hash[4]=='2' and test_hash[5]=='3'):
+            test_hash = self.k.encrypt(self)
+            if (test_hash[0]=='a' and test_hash[1]=='b' and test_hash[2]=='c' \
+                and test_hash[3]=='1' and test_hash[4]=='2' and test_hash[5]=='3'):
                 if self.minted == False:
                     self.minted = True
                     self.minerID = userID
                     return test_hash
-    def hash_xp(self):
-        sha256 = hasher.sha256()
-        sha256.update(str(self.index) + str(self.timestamp) + str(self.data) + str(self.previous_hash) + str(self.getNonce(random.randint(40,50))))
-        return sha256.hexdigest()
     def getNonce(self, len):
         nonce = ''
         for _ in range(len):
             nonce.join(str(random.randint(0,9)))
         return str(nonce)
-
-AcceptedChain = list()
-
-class WorkingTree():
-    def __init__(self, last_transaction):
-        self.last_transaction = AcceptedChain[-1]
