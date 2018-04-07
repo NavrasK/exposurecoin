@@ -13,7 +13,7 @@ class PastebinHandler():
     def __init__(self):
         self.pasteparser = PasteFetcher()
         self.URL = "https://pastebin.com/"
-        self.file_loc = "../textfiles/"
+        self.file_loc = "../../textfiles/"
         self.extension = {}
         self.read_backup()
 

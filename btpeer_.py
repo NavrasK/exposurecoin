@@ -1,3 +1,5 @@
+# Created by Nadeem Abdul Hamid (http://cs.berry.edu/~nhamid/p2p/framework-python.html)
+
 #!/usr/bin/python
 
 # btpeer.py

@@ -37,3 +37,5 @@ create a pastebin account and get your dev API key
 Pastebin API created by AcidVegas (https://www.github.com/acidvegas/pastebin)
 
 Pastebin Parser created by lnus (https://github.com/lnus/pastebin-reader)
+
+Python P2P created by Nadeem Abdul Hamid (http://cs.berry.edu/~nhamid/p2p/framework-python.html)
