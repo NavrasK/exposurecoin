@@ -9,6 +9,7 @@ from gui_ import ClientApp
 
 class Keys():
     def __init__(self):
+        self.file_loc = "textfiles/"
         self.keys = {}
         self.refreshKeys()
 
@@ -29,7 +30,7 @@ class Keys():
     def refreshKeys(self):
         self.keys = {}
         k = {}
-        with open('textfiles/publicKeys.txt', mode='r') as file:
+        with open(self.file_loc + "publicKeys.txt", mode='r') as file:
             for line in file:
                 uid, pk = line.rstrip().split(':')
                 if uid not in k:
@@ -39,17 +40,17 @@ class Keys():
     def generateKeyPair(self, uid):
         pk = self.generate_nonce(2048) #publickey
         sk = self.generate_nonce(2048) #secret/privatekey
-        if not os.path.isfile("textfiles/EXPkey.txt"):
-            with open("textfiles/EXPkey.txt", mode='a') as file:
+        if not os.path.isfile(self.file_loc + "EXPkey.txt"):
+            with open(self.file_loc + "EXPkey.txt", mode='a') as file:
                 file.write(sk)
-            with open('textfiles/publicKeys.txt', mode='a') as file:
+            with open(self.file_loc + "publicKeys.txt", mode='a') as file:
                 file.write(uid + ":" + pk + "\n")
         else:
             if ClientApp.overwrite_key_confirm(ClientApp):
-                with open("textfiles/EXPkey.txt", mode="w") as file:
+                with open(self.file_loc + "EXPkey.txt", mode="w") as file:
                     file.truncate(0)
                     file.write(sk)
-                with open("textfiles/publicKeys.txt", mode='a') as file:
+                with open(self.file_loc + "publicKeys.txt", mode='a') as file:
                     file.write(uid + ":" + pk + "\n")
                 print("Deleted and Replaced")
             else:

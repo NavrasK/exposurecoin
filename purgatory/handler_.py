@@ -79,14 +79,14 @@ class PastebinHandler():
             return True
 
     def update_backup(self):
-        with open(self.file_loc+"bkup.txt", "w+") as file:
+        with open(self.file_loc + "bkup.txt", "w+") as file:
             file.truncate(0)
             for i in self.extension:
                 file.write(i+':'+self.extension[i]+'\n')
 
     def read_backup(self):
         self.extension = {}
-        with open(self.file_loc+"bkup.txt", "r") as file:
+        with open(self.file_loc + "bkup.txt", "r") as file:
             for line in file:
                 name, ext = line.split(':')
                 self.extension[name] = ext

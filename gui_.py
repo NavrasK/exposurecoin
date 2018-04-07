@@ -10,6 +10,7 @@ from tkinter import messagebox
 
 class ClientApp(tk.Frame):
     def __init__(self, master):
+        self.file_loc = "textfiles/"
         tk.Frame.__init__(self, master)
         self.grid()
         self.create_elements()
@@ -73,7 +74,7 @@ class ClientApp(tk.Frame):
         credentials = sha256.hexdigest()
         logged_in = False
         i = 0
-        with open("textfiles/usrdata.txt", mode='r') as file:
+        with open(self.file_loc + "usrdata.txt", mode='r') as file:
             for line in file:
                 line = line.rstrip('\n')
                 i += 1
