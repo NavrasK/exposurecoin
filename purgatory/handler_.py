@@ -13,26 +13,26 @@ class PastebinHandler():
     def __init__(self):
         self.pasteparser = PasteFetcher()
         self.URL = "https://pastebin.com/"
+        self.file_loc = "../textfiles/"
         self.extension = {}
         self.read_backup()
-        self.file_loc = "textfiles/"
 
     def get_pastebin_username(self):
-        with open("textfiles/credentials.yaml", "r") as file:
+        with open(self.file_loc+"credentials.yaml", "r") as file:
             data = yaml.load(file)
         pb = data.get('pastebin')
         uname = pb.get('username')
         return uname
 
     def get_pastebin_password(self):
-        with open("textfiles/credentials.yaml", "r") as file:
+        with open(self.file_loc+"credentials.yaml", "r") as file:
             data = yaml.load(file)
         pb = data.get('pastebin')
         pword = pb.get('password')
         return pword
 
     def get_pastebin_dev_key(self):
-        with open("textfiles/credentials.yaml", "r") as file:
+        with open(self.file_loc+"credentials.yaml", "r") as file:
             data = yaml.load(file)
         pb = data.get('pastebin')
         API_key = pb.get('pastebin_dev_api')
@@ -79,14 +79,14 @@ class PastebinHandler():
             return True
 
     def update_backup(self):
-        with open("textfiles/bkup.txt", "w+") as file:
+        with open(self.file_loc+"bkup.txt", "w+") as file:
             file.truncate(0)
             for i in self.extension:
                 file.write(i+':'+self.extension[i]+'\n')
 
     def read_backup(self):
         self.extension = {}
-        with open("textfiles/bkup.txt", "r") as file:
+        with open(self.file_loc+"bkup.txt", "r") as file:
             for line in file:
                 name, ext = line.split(':')
                 self.extension[name] = ext
