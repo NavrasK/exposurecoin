@@ -7,6 +7,9 @@
 import hashlib as hasher #for SHA256
 import time as timer #UNIX time, since actual date/time is irrellevant compared to relative time
 import random
+import time
+import sys
+
 from encryption_ import Keys
 from blockchain_ import WorkingTree
 
@@ -50,3 +53,10 @@ class XP(): #The blocks in the chain are called XP
         for _ in range(len):
             nonce.join(str(random.randint(0,9)))
         return str(nonce)
+
+    def spinner(self):
+        while True:
+            for cursor in '-\\|/':
+                time.sleep(0.1)
+                sys.stdout.write('\r{}'.format(cursor))
+                sys.stdout.flush()
