@@ -20,6 +20,8 @@ class ClientApp(tk.Frame):
         self.logged_in = False
 
     def login_screen(self):
+        # Screen to log into an exisiting account.  This is the main screen you see on startup
+
         print("debug")
         self.config(padx=5, pady=5)
         self.title="EXPCoin Client"
@@ -41,6 +43,8 @@ class ClientApp(tk.Frame):
         self.login_button.grid(row=2, column=1, pady=2)
 
     def new_acc_screen(self):
+        # Screen to create a new account
+
         def validate():
             uname = self.user_field[1].get().rstrip()
             pword = self.pword_field[1].get().rstrip()
@@ -56,6 +60,8 @@ class ClientApp(tk.Frame):
         self.create_acc.grid(row=3, column=1)
         
     def login(self):
+        # Passes information to the user_ class
+        
         uname = self.user_field[1].get().rstrip()
         pword = self.pword_field[1].get().rstrip()
         try:

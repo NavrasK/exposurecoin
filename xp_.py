@@ -24,11 +24,15 @@ Create transaction tree.  This will be a tree object which will take in all the 
 userID = str(input()) #Not sure how to handle this yet but it's super important... it will track your owned currency and your actions
 
 class Genesis():
+    # The genesis block is a special block which contains the initial state of the system
+
     def __init__(self, index, origin_time, timestamp, data, hash):
         self.index = 0                      #Genesis block is block with index 0
         self.timestamp = timer.time()       #TODO: Make the time precise to milliseconds, not UNIX time
 
-class XP(): #The blocks in the chain are called XP
+class XP():
+    # The blocks in the chain are called XP
+    
     def __init__(self, index, timestamp, data, previous_hash, hash, minted, bounty, minerID):
         self.tree = WorkingTree()
         self.index = index
@@ -39,7 +43,11 @@ class XP(): #The blocks in the chain are called XP
         self.minted = False
         self.hash = self.grind_xp()
         self.k = Keys()
+
     def grind_xp(self):
+        # Tries to find the SHA256 Hash which begins with the sequence 'abc123'
+        # TODO Find the probability of this happening for mining time analysis
+
         while(self.minted == False):
             test_hash = self.k.encrypt(self)
             if (test_hash[0]=='a' and test_hash[1]=='b' and test_hash[2]=='c' \
@@ -48,13 +56,11 @@ class XP(): #The blocks in the chain are called XP
                     self.minted = True
                     self.minerID = userID
                     return test_hash
-    def getNonce(self, len):
-        nonce = ''
-        for _ in range(len):
-            nonce.join(str(random.randint(0,9)))
-        return str(nonce)
 
     def spinner(self):
+        # Displays a spinning cursor while mining to show a process is running
+        # TODO probably want to multi-thread this otherwise this will cause mining to take MUCH longer
+
         while True:
             for cursor in '-\\|/':
                 time.sleep(0.1)

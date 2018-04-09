@@ -18,6 +18,9 @@ class User():
         self.k = Keys()
 
     def login(self, uname, pword):
+        # Checks the hash of the input username and password against the encrypted list to see if the user exists
+        # If they do, sign them in
+
         credentials = self.k.encrypt(uname, pword)
         self.logged_in = False
         i = 0
@@ -35,6 +38,8 @@ class User():
             raise ValueError("CREDENTIALS NOT FOUND")
 
     def create(self, uname, pword, pword_confirm):
+        # Creates a new user with the input parameters, if the user exists, log them in
+        
             if not (pword == pword_confirm):
                 raise ValueError("PASSWORDS DO NOT MATCH")
             else:
@@ -68,6 +73,7 @@ class User():
 def terminal_authenticate():
     userid = None
     logged_in = False
+    file_loc = "textfiles/"
 
     while not logged_in:
         have_account = str(input("Do you already have an account? (Y/N)\n"))
@@ -86,7 +92,7 @@ def terminal_authenticate():
             sha256.update((uname+pword).encode('utf-8'))
             credentials = sha256.hexdigest()
             i = 0
-            with open(self.file_loc + "usrdata.txt", mode='r') as file:
+            with open(file_loc + "usrdata.txt", mode='r') as file:
                 for line in file:
                     line = line.rstrip('\n')
                     i += 1
@@ -105,7 +111,7 @@ def terminal_authenticate():
                     idkey.join(str(random.randint(0,9)))
                 sha256.update((uname+pword+idkey).encode('utf-8'))
                 uid = sha256.hexdigest()
-                with open(self.file_loc + "usrdata.txt", mode='a') as file:
+                with open(file_loc + "usrdata.txt", mode='a') as file:
                     file.write(credentials+'\n')
                     file.write(uid+'\n')
                 logged_in = True
@@ -120,7 +126,7 @@ def terminal_authenticate():
                 sha256.update((uname+pword).encode('utf-8'))
                 credentials = sha256.hexdigest()
                 i = 0
-                with open(self.file_loc + "usrdata.txt", mode='r') as file:
+                with open(file_loc + "usrdata.txt", mode='r') as file:
                     for line in file:
                         line = line.rstrip('\n')
                         i += 1

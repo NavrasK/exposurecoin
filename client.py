@@ -1,5 +1,7 @@
 # The client system, combining the user objects and GUI setup
 
+# This is the main program the user will run to use the network
+
 from tkinter import *
 
 # from user_ import User
