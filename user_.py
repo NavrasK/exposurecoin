@@ -46,6 +46,7 @@ class User():
                         line = line.rstrip('\n')
                         i += 1
                         if self.logged_in:
+                            self.userID = line
                             return line
                         elif i % 2:
                             if credentials == line:
@@ -60,6 +61,7 @@ class User():
                         file.write(credentials+'\n')
                         file.write(uid+'\n')
                     self.logged_in = True
+                    self.userID = uid
                     return uid
 
 # Legacy code (for reference)

@@ -2,7 +2,7 @@
 
 from tkinter import *
 
-from user_ import User
+# from user_ import User
 from gui_ import ClientApp
 from encryption_ import Keys
 from networking_ import Network
@@ -12,7 +12,7 @@ def main():
 
     # Initialize
     keys = Keys()
-    user = User()
+    # user = User()
     # app = gui()
     net = Network()
 

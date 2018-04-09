@@ -5,7 +5,7 @@
 import hashlib as hasher
 import os
 import random
-from gui_ import ClientApp
+# from gui_ import ClientApp
 
 class Keys():
     def __init__(self):
