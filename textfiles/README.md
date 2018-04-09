@@ -25,11 +25,13 @@ External class files are named as "name_.py" in all lowercase
 
 ## PREREQUISITES:
 
-install pyyaml with "$ pip install pyyaml"
+install pyyaml with "$ pip install pyyaml" [DEFUNCT]
 
-install beautifulsoup with "$ pip install beautifulsoup4"
+install beautifulsoup with "$ pip install beautifulsoup4" [DEFUNCT]
 
-create a pastebin account and get your dev API key
+create a pastebin account and get your dev API key [DEFUNCT]
+
+install msgpack with "$ pip install msgpack-python"
 
 
 ## CREDITS: 
