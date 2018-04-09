@@ -9,63 +9,77 @@ import tkinter as tk
 from tkinter import messagebox
 
 class ClientApp(tk.Frame):
-    def __init__(self, master):
+    def __init__(self, master = None):
         self.file_loc = "textfiles/"
-        tk.Frame.__init__(self, master)
-        self.grid()
-        self.create_elements()
-        self.display_login_main()
+        super().__init__(master)
+        self.config(width = 500, height = 500)
+        self.login_screen()
+        self.pack()
         self.logged_in = False
 
-    def create_elements(self):
-        self.main_text = tk.Label(self, text="Welcome to the EXPcoin Client")
-        self.terminal_text = tk.Label(self, text="")
-        self.uname_prompt = tk.Label(self, text="ENTER USERNAME")
-        self.pword_prompt = tk.Label(self, text="ENTER PASSWORD")
-        self.pword_confirm_prompt = tk.Label(self, text="CONFIRM PSSWRD")
+    def login_screen(self):
+        print("debug")
+        self.config(padx=5, pady=5)
+        self.title="EXPCoin Client"
 
-        self.uname_entry = tk.Entry(self)
-        self.pword_entry = tk.Entry(self)
-        self.pword_confirm = tk.Entry(self)
+        self.prompt = tk.LabelFrame(self, text="Login", padx=5, pady=5, width=200, height=200)
+        self.prompt.pack(side="top")
+        self.prompt.bind('<Return>', print("enter"))
 
-        self.login_button = tk.Button(self, text="LOGIN", command = self.login())
-        # self.create_acct_button = Button(self, text="CREATE ACCOUNT", command = self.create_account())
-        self.create_button = tk.Button(self, text="CREATE ACCOUNT", command = self.create_user())
+        self.user = (tk.Label(self.prompt, text="Username: "), tk.Entry(self.prompt))
+        self.pword = (tk.Label(self.prompt, text="Password: "), tk.Entry(self.prompt, show='*'))
+        self.create_acc = tk.Button(self.prompt, text="Create a new account", command=self.new_acc_screen)
+        self.login_button = tk.Button(self.prompt, text="Login", command=self.login)
 
-        self.userid = tk.Text(self, width=30, height=5, wrap=tk.CHAR)
-        self.local_balance = tk.Text(self, width = 30, height=5, wrap=tk.CHAR)
+        self.user[0].grid(row=0, column=0)
+        self.user[1].grid(row=0, column=1)
+        self.pword[0].grid(row=1, column=0)
+        self.pword[1].grid(row=1, column=1)
+        self.create_acc.grid(row=3, column=1, pady=2)
+        self.login_button.grid(row=2, column=1, pady=2)
 
-    def display_login_main(self):
-        self.main_text.grid(row=0, column=0, sticky=tk.W)
+    def new_acc_screen(self):
+        def validate():
+            password = (self.pword[1].get().rstrip(), self.conf_pword[1].get().rstrip())
+            if password[0] != password[1]:
+                tk.messagebox.showinfo("Error", "Passwords do not match, try again.")
+                self.pword[1].delete(0,'end')
+                self.conf_pword[1].delete(0,'end')
+            else:
+                try:
+                    self.create_account()
+                except NameError:
+                    self.pword[1].delete(0,'end')
+                    self.conf_pword[1].delete(0,'end')
 
-        self.uname_prompt.grid(row=1, column=0, sticky=tk.W)
-        self.uname_entry.grid(row=1, column=1, columnspan=4, sticky=tk.W)
+        self.prompt.config(text="Create Account")
+        self.login_button.destroy()
+        self.create_acc.config(command=validate, text="Create Account")
+        self.conf_pword = (tk.Label(self.prompt, text="Confirm Password: "), tk.Entry(self.prompt, show='*'))
+        self.conf_pword[0].grid(row=2, column=0)
+        self.conf_pword[1].grid(row=2, column=1)
+        self.create_acc.grid(row=3, column=1)
 
-        self.pword_prompt.grid(row=2, column=0, sticky=tk.W)
-        self.pword_entry.grid(row=2, column=2, columnspan=4, sticky=tk.W)
 
-        self.terminal_text.grid(row=3, columnspan=3)
+
+    def create_account(self):
         
-        #self.create_acct_button.grid(row=4, column=1)
-        self.login_button.grid(row=4, column=2)
-    
-    def display_create_account(self):
-        self.main_text.grid(row=0, column=0, sticky=tk.W)
-
-        self.uname_prompt.grid(row=1, column=0, sticky=tk.W)
-        self.uname_entry.grid(row=1, column=1, columnspan=4, sticky=tk.W)
-
-        self.pword_prompt.grid(row=2, column=0, sticky=tk.W)
-        self.pword_entry.grid(row=2, column=2, columnspan=4, sticky=tk.W)
-
-        self.pword_confirm_prompt.grid(row=3, column=0, sticky=tk.W)
-        self.pword_confirm.grid(row=3, column=1, columnspan=4, sticky=tk.W)
-
-        self.terminal_text.grid(row=4, columnspan=3)
+        uname = self.user[1].get().rstrip()
+        pword = self.pword[1].get().rstrip()
+        sha256 = hasher.sha256()
+        sha256.update((uname + pword).encode('utf-8'))
+        credentials = sha256.hexdigest()
+        print(credentials)
+        with open(self.file_loc + "usrdata.txt", mode='r') as file:
+            for line in file:
+                if line == credentials:
+                    raise NameError
+        with open(self.file_loc + "usrdata.txt", mode='a') as file:
+            file.write(credentials + '\n')
+            self.logged_in = True
+            print('new account created')
+                
         
-        #self.create_acct_button.grid(row=5, column=1)
-        self.login_button.grid(row=5, column=2)
-
     def login(self):
         uname = self.uname_entry.get().rstrip()
         pword = self.pword_entry.get().rstrip()
@@ -89,9 +103,6 @@ class ClientApp(tk.Frame):
                         print("LOGGED IN!")
         if not logged_in:
             self.terminal_text["text"] = "INVALID CREDENTIALS"
-
-    def create_account(self):
-        self.display_create_account()
 
     def create_user(self):
         print("create account")

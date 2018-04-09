@@ -1,27 +1,27 @@
 # The client system, combining the user objects and GUI setup
 
-import tkinter as tk
+from tkinter import *
 
 from user_ import User
-from gui_ import ClientApp as gui
+from gui_ import ClientApp
 from encryption_ import Keys
 from networking_ import Network
 
 def main():
-    root = tk.Tk()
+    root = Tk()
 
     # Initialize
     keys = Keys()
     user = User()
-    app = gui(master=root)
+    # app = gui()
     net = Network()
 
-    root.title("TEST WINDOW")
-    root.config(height = 400, width = 500)
+    root.title("EXPCoin Client")
+    # root.config(height = 400, width = 500)
 
-    app = gui(root)
+    app = ClientApp(master=root)
 
-    root.mainloop()
+    app.mainloop()
 
 if __name__ == "__main__":
     main()
