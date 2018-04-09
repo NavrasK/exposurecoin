@@ -3,7 +3,10 @@
 
 import requests
 import random
-from bs4 import BeautifulSoup
+try:
+    from bs4 import BeautifulSoup
+except:
+    raise ImportError("Install beautifulsoup 4 with 'pip install beautifulsoup4'")
 
 class PasteFetcher():
     def __init__(self):

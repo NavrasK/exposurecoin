@@ -4,7 +4,10 @@
 
 # Note that the current test generates a new paste every time this is run
 
-import yaml
+try:
+    import yaml
+except:
+    raise ImportError("Install yaml with 'pip install pyyaml'")
 import urllib
 from pastebin import PasteBin as pbAPI
 from pastebinparser import PasteFetcher

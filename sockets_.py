@@ -5,7 +5,10 @@
 
 import socket
 import pprint
-import msgpack
+try:
+    import msgpack
+except:
+    raise ImportError("Install msgpack with 'pip install msgpack-python'")
 
 example_files = {'testing.txt':'This is a tessst', "linkinpark.mp3.exe":"100 percent legit"}
 
