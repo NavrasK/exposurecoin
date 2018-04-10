@@ -47,8 +47,11 @@ class XP():
 
         previous = chain[-1]
         previousHash = previous[u'hash']
-        num = previous[u'contents'][u'blockNum'] + 1
+        self.num = previous[u'contents'][u'blockNum'] + 1
         self.contents = {u'blockNum':num, u'previousHash':previousHash}
+
+    def __str__(self):
+        return str(self.num)
 
 
     def addTransactions(self, transactions):
