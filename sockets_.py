@@ -8,7 +8,7 @@ import pprint
 try:
     import msgpack
 except:
-    raise ImportError("Install msgpack with 'pip install msgpack-python'")
+    raise ImportError("Install msgpack with 'sudo pip3 install msgpack-python'")
 
 example_files = {'testing.txt':'This is a tessst', "linkinpark.mp3.exe":"100 percent legit"}
 
