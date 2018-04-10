@@ -60,7 +60,7 @@ def need_help(i):
 
 
 def format_transaction(sender_sk, sender_uid, reciever_uid, amount):
-    signature = k.signature(amount, sender_sk)
+    signature = rsa.sign(amount, sender_sk, 'sha256')
     txn = {u'sender': sender_uid, u'reciever': reciever_uid, u'amount': amount, u'sig': signature}
     return txn
 

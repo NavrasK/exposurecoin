@@ -78,17 +78,17 @@ class Chain():
             if block.timestamp <= self.chain[id-1].timestamp:
                 raise Exception('Time paradox between blocks {} and {}'.format(id-1, id))
 
-       def check_balances(self, accepted):
-            balances = accepted
-            for transaction in self.transaction_queue:
-               t = transaction[1:-1]
-               t.split(',')
-               if t[0] not in balances:
-                   balances[t[0]] = -float(t[2])
-               else:
-                   balances[t[0]] -= float(t[2])
-               if t[1] not in balances:
-                   balances[t[1]] = float(t[2])
-               else:
-                   balances[t[1]] += float(t[2])
-            return balances
+    def check_balances(self, accepted):
+        balances = accepted
+        for transaction in self.transaction_queue:
+           t = transaction[1:-1]
+           t.split(',')
+           if t[0] not in balances:
+               balances[t[0]] = -float(t[2])
+           else:
+               balances[t[0]] -= float(t[2])
+           if t[1] not in balances:
+               balances[t[1]] = float(t[2])
+           else:
+               balances[t[1]] += float(t[2])
+        return balances
