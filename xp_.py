@@ -9,8 +9,10 @@ import time as timer #UNIX time, since actual date/time is irrellevant compared 
 import random
 import time
 import sys
+import json
+import threading
 
-from encryption_ import Keys
+from encryption_ import Keys as encryptor
 from blockchain_ import WorkingTree
 
 '''
@@ -21,14 +23,23 @@ Create consensus block chain.  This will be a list of transactions which when fo
 Create transaction tree.  This will be a tree object which will take in all the incoming transactions and will be used to determine what to add to block chain
 '''
 
+
+    
+
 userID = str(input()) #Not sure how to handle this yet but it's super important... it will track your owned currency and your actions
 
-class Genesis():
-    # The genesis block is a special block which contains the initial state of the system
+def threaded(fn):
+    def wrapper(*args, **kwargs):
+        threading.Thread(target=fn, args=args, kwargs=kwargs).start()
+    return wrapper
 
-    def __init__(self, index, origin_time, timestamp, data, hash):
-        self.index = 0                      #Genesis block is block with index 0
-        self.timestamp = timer.time()       #TODO: Make the time precise to milliseconds, not UNIX time
+def createGenesis():
+    # The genesis block is a special block which contains the initial state of the system
+    timestamp = timer.time()       #TODO: Make the time precise to milliseconds, not UNIX time
+    contents = {u'blockNum': 0, u'previousHash': None, u'timestamp':timestamp, u'numTxn': 0, u'transactions':None}
+    hash = encryptor.encrypt(json.dumps(contents, sort_keys=True))
+
+    return {u'hash':hash, u'contents':contents}
 
 class XP():
     # The blocks in the chain are called XP
@@ -66,3 +77,42 @@ class XP():
                 time.sleep(0.1)
                 sys.stdout.write('\r{}'.format(cursor))
                 sys.stdout.flush()
+
+class XPcoin():
+    difficulty = 3
+
+    def __init__(self, chain = None, transactions = None):
+        self.chain = chain
+        self.transactions = transactions
+        self.minted = False
+        self.minerID = None
+
+        previous = chain[-1]
+        previousHash = previous[u'hash']
+        num = previous[u'contents'][u'blockNum'] + 1
+        self.contents = {u'blockNum':num, u'previousHash':previousHash}
+
+
+    def addTransactions(self, transactions):
+        self.transactions.update(transactions)
+        pass
+        # txn = rec.pk + amount + self.sk
+
+
+    # TODO: What if transactions == None?
+    @threaded
+    def grind_xp(self, value, userID):
+        testHash = encryptor.encrypt(str(json.dumps(transactions, sort_keys=True)) + str(value))
+        code = '0' * difficulty
+        if testHash[0:difficulty] == code:
+            self.minted = True
+            # add txn with user gaining free money
+            self.minerID = userID
+            self.levelUP()
+
+    def levelUP(self):
+        self.contents.update({u'timestamp':timer.time(), u'numTxn':len(self.transactions), u'transactions':self.transactions})
+        hash = encryptor.encrypt(self.contents)
+        return {u'hash':hash, u'contents':contents}
+
+

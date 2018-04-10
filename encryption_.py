@@ -3,6 +3,7 @@
 # TODO: Make the generateKeyPair properly write to file and fix the popup window, move all encryption tasks here
 
 import hashlib as hasher
+import rsa
 import os
 import random
 # from gui_ import ClientApp
@@ -23,13 +24,21 @@ class Keys():
         sha256.update((s).encode('utf-8'))
         return sha256.hexdigest()
 
-    def generate_nonce(self, length):
-        # Creates a random stream of bit of a specified length, used as a single use value
+    # I guess this is unneeded now
+    # def generate_nonce(self, length):
+    #     # Creates a random stream of bit of a specified length, used as a single use value
 
-        s = ''
-        for _ in range(length):
-            s += (str(random.randint(0,1)))
-        return s
+    #     s = ''
+    #     for _ in range(length):
+    #         s += (str(random.randint(0,1)))
+    #     return s
+
+    def signature(self, message, sk):
+        return rsa.sign(message, sk, 'SHA256')
+
+    def verify(self, message, signature, uid):
+        self.refreshKeys()
+        return rsa.verify(message, signature, keys[uid])
 
     def refreshKeys(self):
         # Checks the list of public keys and refreshes the dictionary
@@ -41,13 +50,11 @@ class Keys():
                 uid, pk = line.rstrip().split(':')
                 if uid not in k:
                     k[uid] = pk
-        return k
+        self.keys = k
 
     def generateKeyPair(self, uid):
         # Creates a public and private key pair
-
-        pk = self.generate_nonce(2048) #publickey
-        sk = self.generate_nonce(2048) #secret/privatekey
+        pk, sk = rsa.newkeys(512)
         if not os.path.isfile(self.file_loc + "EXPkey.txt"):
             with open(self.file_loc + "EXPkey.txt", mode='a') as file:
                 file.write(sk)

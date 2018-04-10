@@ -2,6 +2,6 @@
 
 # TODO: This is where a lot of the fraud protection will be
 
-class WorkingTree():
+class WorkingTree(list):
     def __init__(self):
         self.AcceptedChain = {}
