@@ -2,7 +2,6 @@
 
 # TODO: Nuke it and start over from the top
 
-import hashlib as hasher
 import os
 import random
 from user_ import User
@@ -15,17 +14,16 @@ class ClientApp(tk.Frame):
     def __init__(self, master = None):
         super().__init__(master)
         self.config(width = 500, height = 500)
+        self.master = master
         self.lg = Login_Window(master)
+    
     
     def run(self):
         self.lg.mainloop()
-
-        while not self.lg.user.logged_in:
-            print(self.lg.user.logged_in)
-            continue
-        
-        print("test")
-
+        user = self.lg.user
+        self.interface = Interface_Window(master = self.master, user = user)
+        self.interface.mainloop()
+        print("help")
 
 class Window(tk.Frame):
     widgets = []
@@ -68,6 +66,7 @@ class Login_Window(Window):
         self.pword_field = (tk.Label(self.prompt, text="Password: "), tk.Entry(self.prompt, show='*'))
         self.create_acc = tk.Button(self.prompt, text="Create a new account", command=self.new_acc_screen)
         self.login_button = tk.Button(self.prompt, text="Login", command=self.login)
+        self.pword_field[1].bind('<Return>', print("enter"))
 
         Login_Window.widgets.extend([self.prompt, self.user_field[0], self.user_field[1], self.pword_field[0], self.pword_field[1], self.create_acc, self.login_button])
 
@@ -116,3 +115,50 @@ class Login_Window(Window):
     def close(self):
         super().close()
         return self.user
+
+class Interface_Window(Window):
+    def __init__(self, master = None, user = None):
+        super().__init__(master)
+        self._init_menubar()
+        self.pack()
+        self.master = master
+        print("interface")
+        self.user = user
+    
+    def _init_menubar(self):
+        self.menubar = tk.Menu(self)
+        Interface_Window.widgets.append(self.menubar)
+
+        acc_menu = tk.Menu(self.menubar, tearoff=0)
+        acc_menu.add_command(label="My Account", command=self.display_Account)
+        acc_menu.add_command(label="Logout", command=self.logout)
+
+        help_menu = tk.Menu(self.menubar, tearoff=0)
+        help_menu.add_command(label="Help", command=self.display_Help)
+        help_menu.add_command(label="About", command=self.display_About)
+
+        self.menubar.add_cascade(label="Account", menu=acc_menu)
+        self.menubar.add_cascade(label="Help", menu=help_menu)
+
+        self.master.config(menu=self.menubar)
+    
+    def display_Account(self):
+        self.acc_Frame = tk.LabelFrame(self, text='test')
+        self.acc_Frame.pack(side='top')
+        Interface_Window.widgets.append(self.acc_Frame)
+        # line = 'test'
+        test_line = tk.StringVar()
+        test_line.set('test')
+        # accounts = tk.StringVar(master=self.acc_Frame, value="User ID: " + self.user.userID + "\n Local Balance: ONE MILLION DOLLARS")
+        # accounts.set"User ID: " + self.user.userID + "\n Local Balance: ONE MILLION DOLLARS")
+
+        self.acc_info = tk.Label(self, textvariable=test_line)
+
+    def logout(self):
+        pass
+    
+    def display_About(self):
+        pass
+
+    def display_Help(self):
+        pass

@@ -44,7 +44,7 @@ class FileShareNode:
          in_data, in_addr = self.s.recvfrom(65536) 
          data = msgpack.unpackb(in_data)
          pprint.pprint((in_addr, data))
-         getattr(self,'handle_%s' % data['msgtype'])(data, in_addr)
+        #  getattr(self,'handle_%s' % data['msgtype'])(data, in_addr)
 
 if __name__ == "__main__":
     node = FileShareNode({})
