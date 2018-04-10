@@ -9,8 +9,8 @@ try:
 except:
     raise ImportError("Install yaml with 'pip install pyyaml'")
 import urllib
-from pastebin import PasteBin as pbAPI
-from pastebinparser import PasteFetcher
+from pastebin_ import PasteBin as pbAPI
+from pastebinparser_ import PasteFetcher
 
 class PastebinHandler():
     def __init__(self):
