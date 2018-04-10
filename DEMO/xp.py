@@ -83,7 +83,7 @@ class Chain():
             for txn in block.transactions:
                 if not verify_txn(txn):
                     raise Exception('Invalid transaction in block {}, {}'.format(id, txn))
-            if self.chain[id-1].hash != block,previousHash:
+            if self.chain[id-1].hash != block.previousHash:
                  raise Exception('Hash inconsistency between blocks {} and {}'.format(id-1, id))
             
             if block.timestamp <= self.chain[id-1].timestamp:
