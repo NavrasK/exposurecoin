@@ -1,6 +1,6 @@
 # The client system, combining the user objects and GUI setup
 
-# This is the main program the user will run to use the network
+# This is the primary function, but the user should run RUNMEFIRST_.py only
 
 from tkinter import *
 
