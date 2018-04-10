@@ -88,8 +88,3 @@ class Chain():
             
             if block.timestamp <= self.chain[id-1].timestamp:
                 raise Exception('Time paradox between blocks {} and {}'.format(id-1, id))
-
-
-
-class Keys():
-    def __init__(self)
