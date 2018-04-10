@@ -11,6 +11,11 @@ def transaction(sender_sk, sender_uid, reciever_uid, amount):
     txn = {u'sender':sender_uid, u'reciever':reciever_uid, u'amount':amount, u'sig':signature}
     return txn
 
+def verify_txn(txn):
+    uid, signature, amount = txn['sender'], txn['signature'], txn['amount']
+
+    return k.verify(amount, signature, uid)
+
 def createGenesis():
     b = Block()
     b.previous_hash = None
@@ -22,7 +27,7 @@ class Block():
     def __init__(self, previous_hash = None):
         self.hash = None
         self.previous_hash = None
-        self.transactions = {}
+        self.transactions = []
         self.timestamp = None
         self.full = False
         
@@ -30,7 +35,7 @@ class Block():
     def addTransaction(self, transaction):
         # transaction of the form produced by transaction() above
         if not self.full:
-            self.transactions.update(transaction)
+            self.transactions.append(transaction)
             if len(transactions) == Block.max_txn:
                 self.full = True
         else:
@@ -67,7 +72,17 @@ class Chain():
         if block.mine(value):
             self.chain.append(block)
     
-    
+    def verify(self):
+        for id, block in enumerate(self.chain):
+            for txn in block.transactions:
+                if not verify_txn(txn):
+                    raise Exception('Invalid transaction in block {}, {}'.format(id, txn))
+            if self.chain[id-1].hash != block,previousHash:
+                 raise Exception('Hash inconsistency between blocks {} and {}'.format(id-1, id))
+            
+            if block.timestamp <= self.chain[id-1].timestamp:
+                raise Exception('Time paradox between blocks {} and {}'.format(id-1, id))
+
 
 
 class Keys():
