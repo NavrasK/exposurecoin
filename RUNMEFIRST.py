@@ -16,9 +16,9 @@ except ImportError:
 try:
     import yaml
 except ImportError:
-    print("Installing yaml in 3 seconds [quit via interrupt to cancel]")
+    print("Installing pyyaml in 3 seconds [quit via interrupt to cancel]")
     time.sleep(4)
-    os.system('sudo pip3 install yaml')
+    os.system('sudo pip3 install pyyaml')
 
 try:
     import bs4

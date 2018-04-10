@@ -1,13 +1,22 @@
-# exposurecoin
+EXPOSUREcoin
+CMPUT 275 Final Project
+Created by Navras Kamal (1505463) and Jesse Goertzen (XXXXXXX)
+April 2018
+
+INSTRUCTIONS:
+Ensure you have the prerequisites installed then run 'python3 RUNMEFIRST.py'
+
+DESCRIPTION:
 Python based blockchain proof of concept cyptocurrency
 
+BACKGROUND:
+This is a cryptocurrency that can be used in a relatively small group of people who make multiple transactions
+in bursts.  For example if you are betting on horse races in an illegal gambling ring.  You could use this 
+crypto to handle bets during the event, then settle up at the end, or keep the program running for the next 
+time there is a couple races.  That way the transactions are more secret and dirty money doesn't exchange 
+hands until the end.  From this background there is some assumptions that can be made.
 
-## BACKGROUND:
-
-This is a cryptocurrency that can be used in a relatively small group of people who make multiple transactions in bursts.  For example if you are betting on horse races in an illegal gambling ring.  You could use this crypto to handle bets during the event, then settle up at the end, or keep the program running for the next time there is a couple races.  That way the transactions are more secret and dirty money doesn't exchange hands until the end.  From this background there is some assumptions that can be made.
-
-
-## ASSUMPTIONS:
+ASSUMPTIONS:
  - There is a relatively small number of users
  - There will be multiple transactions made at the end of each "event"
  - Each transaction is made between two people
@@ -17,27 +26,16 @@ This is a cryptocurrency that can be used in a relatively small group of people 
  - Players want to remain anonymous
  - This is a proof of concept, not a fully fledged cryptocurrency
 
-
-## CONVENTIONS:
-
+CONVENTIONS:
 External class files are named as "name_.py" in all lowercase
 
-
-## PREREQUISITES:
-
+PREREQUISITES:
 install pyyaml with "$ pip install pyyaml" 
-
 install beautifulsoup with "$ pip install beautifulsoup4" 
-
+install msgpack with "$ pip install msgpack-python"
 create a pastebin account and get your dev API key 
 
-install msgpack with "$ pip install msgpack-python"
-
-
-## CREDITS: 
-
+CREDITS: 
 Pastebin API created by AcidVegas (https://www.github.com/acidvegas/pastebin)
-
 Pastebin Parser created by lnus (https://github.com/lnus/pastebin-reader)
-
 Python P2P created by Nadeem Abdul Hamid (http://cs.berry.edu/~nhamid/p2p/framework-python.html)
