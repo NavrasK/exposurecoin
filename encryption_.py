@@ -24,15 +24,6 @@ class Keys():
         sha256.update((s).encode('utf-8'))
         return sha256.hexdigest()
 
-    # I guess this is unneeded now
-    # def generate_nonce(self, length):
-    #     # Creates a random stream of bit of a specified length, used as a single use value
-
-    #     s = ''
-    #     for _ in range(length):
-    #         s += (str(random.randint(0,1)))
-    #     return s
-
     def signature(self, message, sk):
         return rsa.sign(message, sk, 'SHA256')
 
