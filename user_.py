@@ -58,6 +58,7 @@ class User():
                                 print("ACCOUNT ALREADY EXISTS!")
                                 print("LOGGING IN")
                                 self.logged_in = True
+                                return None  # Testing this for making GUI, if I forget to change back and it causes problems, lemme know
                 if not self.logged_in:
                     print("CREATING ACCOUNT")
                     idkey = self.k.generate_nonce(2048)

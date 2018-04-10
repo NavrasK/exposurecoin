@@ -23,7 +23,7 @@ def main():
 
     app = ClientApp(master=root)
 
-    app.mainloop()
+    app.run()
 
 if __name__ == "__main__":
     main()
