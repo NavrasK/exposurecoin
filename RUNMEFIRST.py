@@ -13,4 +13,18 @@ except ImportError:
     time.sleep(4)
     os.system('sudo pip3 install msgpack-python')
 
+try:
+    import yaml
+except ImportError:
+    print("Installing yaml in 3 seconds [quit via interrupt to cancel]")
+    time.sleep(4)
+    os.system('sudo pip3 install yaml')
+
+try:
+    import bs4
+except ImportError:
+    print("Installing BeautifulSoup in 3 seconds [quit via interrupt to cancel]")
+    time.sleep(4)
+    os.system('sudo pip3 install beautifulsoup4')
+
 main()
