@@ -31,10 +31,11 @@ class Network():
 
     def socket_thread(self):
         while True:
-            in_data = self.s.recvfrom(65536)
+            in_data, in_addr = self.s.recvfrom(65536)
             data = msgpack.unpackb(in_data)
             with self.print_lock:
-                pprint.pprint((data))
+                pprint.pprint((in_addr, data))
+            return True
 
     def spinner(self):
         while True:
