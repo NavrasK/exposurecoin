@@ -5,9 +5,8 @@
 # Note: this isn't for the tree, this is just the block object, of which there will be many.  Functions for adding this to the tree can be here, but any more should be in the blockchain_ file
 
 import hashlib as hasher #for SHA256
-# import time as timer #UNIX time, since actual date/time is irrellevant compared to relative time
 # import random
-import time
+import time as timer
 # import sys
 import json
 import threading
