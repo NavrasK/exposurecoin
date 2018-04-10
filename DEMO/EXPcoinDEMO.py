@@ -2,6 +2,8 @@
 
 import time
 import sys
+import rsa
+from user import User
 
 valid_cmd = {"balances" : "Refreshes and displays the total balance for all users", \
              "chain" : "Displays the current state of the blockchain for the selected user" , \
@@ -10,7 +12,12 @@ valid_cmd = {"balances" : "Refreshes and displays the total balance for all user
              "incomp" : "Creates an incomplete transaction, broadcast only to the sender and reciever", \
              "mint" : "Causes each user to generate a block with their current transaction list"}
 
-
+a = User('a')
+b = User('b')
+c = User('c')
+d = User('d')
+s = User('s')
+users = {a.id:a, b.id:b, c.id:c, d.id:d, s.id:s}
 
 def intro():
     print("\nLOADING>>>")
@@ -76,10 +83,21 @@ def new_transaction():
     transaction = '(' + trx_from + ',' + trx_to + ',' + str(trx) + ')'
     return transaction
 
-def broadcast(transaction, targets = [a.id, b.id, c.id, d.id, s.id]):
+def broadcast(transaction, targets = ['a', 'b', 'c', 'd', 's']):
     for target in targets:
+        if target in users:
+            users[target].transaction_queue.append(transaction)
 
+def verify_signature(self, message, signature, uid):
+    self.refreshKeys()
+    return rsa.verify(message, signature, self.keys[uid])
 
+def view_chain(u):
+    print("VIEWING CHAIN")
+
+def view_queue(u):
+    print("VIEWING QUEUE")
+    
 def handle_cmd():
     i = 0
     while True:
@@ -91,7 +109,7 @@ def handle_cmd():
             continue
     print(valid_cmd[cmd])
     if cmd == 'balances':
-        check_balances()
+        print("CURRENT BALANCE: \n" + s.check_balances())
 
     elif cmd == 'chain':
         print("View chain for which user? (Default: You)")
