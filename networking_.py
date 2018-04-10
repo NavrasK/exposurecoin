@@ -16,7 +16,7 @@ except:
     raise ImportError("Install msgpack with 'sudo pip3 install msgpack-python'")
 
 class Network():
-    def __init__(self):
+    def __init__(self, data):
         self.ip = '127.0.0.1' # Localhost
         self.bin = PBH
         self.peers = {}
@@ -25,7 +25,8 @@ class Network():
         self.s.bind(('', 0))
         with self.print_lock:
             print('Listening for peers @ UDP port %s' % self.s.getsockname()[1])
-        
+
+    def start_socket(self):
         threader._start_new_thread(self.socket_thread(), ())
 
     def socket_thread(self):
@@ -35,16 +36,6 @@ class Network():
             with self.print_lock:
                 pprint.pprint((data))
 
-    def input_loop(self):
-        while True:
-            in_data = input()
-            port = int(input().rstrip())
-            cmd = "self.s.sendto(" + in_data + ",(self.ip," + port + "))"
-            os.system(cmd)
-            restart = input("Continue? (0 to quit)\n")
-            if not restart:
-                break
-
     def spinner(self):
         while True:
             for cursor in '-\\|/':
@@ -53,5 +44,6 @@ class Network():
                 sys.stdout.flush()
 
 if __name__ == "__main__":
-    net = Network()
+    net = Network({})
+    net.start_socket()
     print("DONE")
