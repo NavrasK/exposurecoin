@@ -5,10 +5,10 @@
 # Note: this isn't for the tree, this is just the block object, of which there will be many.  Functions for adding this to the tree can be here, but any more should be in the blockchain_ file
 
 import hashlib as hasher #for SHA256
-import time as timer #UNIX time, since actual date/time is irrellevant compared to relative time
-import random
+# import time as timer #UNIX time, since actual date/time is irrellevant compared to relative time
+# import random
 import time
-import sys
+# import sys
 import json
 import threading
 
@@ -37,7 +37,7 @@ def createGenesis():
     return {u'hash':hash, u'contents':contents}
 
 
-class XPcoin():
+class XP():
     difficulty = 3
 
     def __init__(self, chain = None, transactions = None):
@@ -65,8 +65,8 @@ class XPcoin():
             pass
         else:
             testHash = encryptor.encrypt(str(json.dumps(self.transactions, sort_keys=True)) + str(value))
-            code = '0' * difficulty
-            if testHash[0:difficulty] == code:
+            code = '0' * XP.difficulty
+            if testHash[0:XP.difficulty] == code:
                 self.minted = True
                 # add txn with user gaining free money
                 self.minerID = userID
