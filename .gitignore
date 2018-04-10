@@ -2,3 +2,4 @@
 *.yaml
 *.pyc
 .vscode
+.gitignore
