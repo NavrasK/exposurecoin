@@ -59,12 +59,18 @@ class Chain():
 
     def __contains__(self, block):
         for b in self.chain:
-            if b.hash == block.hash
+            if b.hash == block.hash:
                 return True
         return False
 
     def __getattr__(self, index):
         return self.chain[index]
+
+    def get_balance(self):
+        accepted = {}
+        for block in self.chain:
+            accepted = block.check_balances(accepted)
+        return accepted
 
     def addBlock(self, block, value):
         if block in self:

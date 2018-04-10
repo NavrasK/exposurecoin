@@ -4,6 +4,7 @@ import time
 import sys
 import rsa
 from user import User
+from xp import Chain as blockchain
 
 valid_cmd = {"balances" : "Refreshes and displays the total balance for all users", \
              "chain" : "Displays the current state of the blockchain for the selected user" , \
@@ -109,7 +110,8 @@ def handle_cmd():
             continue
     print(valid_cmd[cmd])
     if cmd == 'balances':
-        print("CURRENT BALANCE: \n" + s.check_balances())
+        accepted = blockchain.get_balance()
+        print("CURRENT BALANCE: \n" + s.check_balances(accepted))
 
     elif cmd == 'chain':
         print("View chain for which user? (Default: You)")

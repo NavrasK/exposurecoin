@@ -17,8 +17,8 @@ class User():
             s += random.randint(0,1)
         return s
 
-    def check_balances(self):
-        balances = {}
+    def check_balances(self, accepted):
+        balances = accepted
         for transaction in self.transaction_queue:
             t = transaction[1:-1]
             t.split(',')
@@ -30,3 +30,4 @@ class User():
                 balances[t[1]] = float(t[2])
             else:
                 balances[t[1]] += float(t[2])
+        return balances
