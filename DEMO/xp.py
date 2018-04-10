@@ -58,7 +58,7 @@ class Chain():
         self.next = Block()
 
     def __contains__(self, block):
-        for b in chain:
+        for b in self.chain:
             if b.hash == block.hash
                 return True
         return False
