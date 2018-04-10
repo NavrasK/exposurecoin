@@ -2,7 +2,7 @@
 
 # This is the primary function, but the user should run RUNMEFIRST_.py only
 
-from tkinter import *
+import tkinter as tk
 
 # from user_ import User
 from gui_ import ClientApp
@@ -10,7 +10,7 @@ from encryption_ import Keys
 from networking_ import Network
 
 def main():
-    root = Tk()
+    root = tk.Tk()
 
     # Initialize
     keys = Keys()
