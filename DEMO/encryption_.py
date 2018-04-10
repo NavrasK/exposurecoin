@@ -23,7 +23,7 @@ class Keys():
         sha256 = hasher.sha256()
         sha256.update((s).encode('utf-8'))
         return sha256.hexdigest()
-
+    
     def signature(self, message, sk):
         return rsa.sign(message, sk, 'SHA256')
 

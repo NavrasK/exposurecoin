@@ -4,6 +4,15 @@ import hashlib as hasher
 import time as timer
 from encryption_ import Keys as k
 
+<<<<<<< HEAD
+=======
+rsa
+
+def transaction(sender_sk, sender_uid, reciever_uid, amount):
+    signature = k.signature(amount, sk=sender_sk)
+    txn = {u'sender':sender_uid, u'reciever':reciever_uid, u'amount':amount, u'sig':signature}
+    return txn
+>>>>>>> 7a97593f6e06a5d8574b815080605866304f9f7d
 
 def verify_txn(txn):
     uid, signature, amount = txn['sender'], txn['signature'], txn['amount']
