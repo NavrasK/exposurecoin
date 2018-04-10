@@ -7,7 +7,7 @@
 try:
     import yaml
 except:
-    raise ImportError("Install yaml with 'pip install pyyaml'")
+    raise ImportError("Install yaml with 'sudo pip3 install pyyaml'")
 import urllib
 from pastebin_ import PasteBin as pbAPI
 from pastebinparser_ import PasteFetcher
