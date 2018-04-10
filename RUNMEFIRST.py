@@ -28,7 +28,7 @@ except ImportError:
     os.system('sudo pip3 install beautifulsoup4')
 
 try:
-    import Crypto
+    import rsa
 except ImportError:
     print("Installing PyCrypto in 3 seconds [quit via interrupt to cancel]")
     time.sleep(4)

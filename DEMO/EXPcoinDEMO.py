@@ -4,6 +4,8 @@ import time
 import sys
 import rsa
 from user import User
+from encryption_ import Keys as k
+from xp import Chain as blockchain
 
 valid_cmd = {"balances" : "Refreshes and displays the total balance for all users", \
              "chain" : "Displays the current state of the blockchain for the selected user" , \
@@ -24,6 +26,9 @@ def intro():
     spinner(2)
     print("\rWelcome to the EXPcoin Demo Progam!")
     print("This is a program to demonstrate how a cryptocurrencies work")
+    help()
+    handle_cmd()
+
 
 def help():
     print("\nThere is 4 other virtual users on the network")
@@ -55,7 +60,7 @@ def need_help(i):
 
 
 def format_transaction(sender_sk, sender_uid, reciever_uid, amount):
-    signature = k.sign(amount, sender_sk)
+    signature = k.signature(amount, sender_sk)
     txn = {u'sender': sender_uid, u'reciever': reciever_uid, u'amount': amount, u'sig': signature}
     return txn
 
@@ -117,7 +122,8 @@ def handle_cmd():
             continue
     print(valid_cmd[cmd])
     if cmd == 'balances':
-        print("CURRENT BALANCE: \n" + s.check_balances())
+        accepted = blockchain.get_balance()
+        print("CURRENT BALANCE: \n" + s.check_balances(accepted))
 
     elif cmd == 'chain':
         print("View chain for which user? (Default: You)")
