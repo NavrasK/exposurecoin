@@ -1,15 +1,18 @@
-import rsa
+# import rsa
 import json
-import hashlib as hasher
+# import hashlib as hasher
 import time as timer
 from encryption_ import Keys as k
 
+<<<<<<< HEAD
 rsa
 
 def transaction(sender_sk, sender_uid, reciever_uid, amount):
     signature = k.signature(amount, sk=sender_sk)
     txn = {u'sender':sender_uid, u'reciever':reciever_uid, u'amount':amount, u'sig':signature}
     return txn
+=======
+>>>>>>> 1618e36c2a470f37bf926efaa895cff70a1696b2
 
 def verify_txn(txn):
     uid, signature, amount = txn['sender'], txn['signature'], txn['amount']
@@ -98,3 +101,18 @@ class Chain():
 
             if block.timestamp <= self.chain[id-1].timestamp:
                 raise Exception('Time paradox between blocks {} and {}'.format(id-1, id))
+
+    def check_balances(self, accepted):
+        balances = accepted
+        for transaction in self.transaction_queue:
+           t = transaction[1:-1]
+           t.split(',')
+           if t[0] not in balances:
+               balances[t[0]] = -float(t[2])
+           else:
+               balances[t[0]] -= float(t[2])
+           if t[1] not in balances:
+               balances[t[1]] = float(t[2])
+           else:
+               balances[t[1]] += float(t[2])
+        return balances

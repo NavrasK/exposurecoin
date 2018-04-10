@@ -28,6 +28,10 @@ def intro():
     print("This is a program to demonstrate how a cryptocurrencies work")
     help()
     handle_cmd()
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1618e36c2a470f37bf926efaa895cff70a1696b2
 
 def help():
     print("\nThere is 4 other virtual users on the network")
@@ -59,7 +63,11 @@ def need_help(i):
 
 
 def format_transaction(sender_sk, sender_uid, reciever_uid, amount):
+<<<<<<< HEAD
     signature = k.signature(amount, sender_sk)
+=======
+    signature = rsa.sign(amount, sender_sk, 'sha256')
+>>>>>>> 1618e36c2a470f37bf926efaa895cff70a1696b2
     txn = {u'sender': sender_uid, u'reciever': reciever_uid, u'amount': amount, u'sig': signature}
     return txn
 
