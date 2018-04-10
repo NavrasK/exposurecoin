@@ -4,20 +4,17 @@ import hashlib as hasher
 import time as timer
 from encryption_ import Keys as k
 
-<<<<<<< HEAD
-=======
 rsa
 
 def transaction(sender_sk, sender_uid, reciever_uid, amount):
     signature = k.signature(amount, sk=sender_sk)
     txn = {u'sender':sender_uid, u'reciever':reciever_uid, u'amount':amount, u'sig':signature}
     return txn
->>>>>>> 7a97593f6e06a5d8574b815080605866304f9f7d
 
 def verify_txn(txn):
     uid, signature, amount = txn['sender'], txn['signature'], txn['amount']
 
-    return k.verify(amount, signature, uid)
+    return k.verify(amount, signature, uid=uid)
 
 
 def createGenesis():
@@ -75,6 +72,21 @@ class Chain():
             return False  # maybe this should be an exception
         if block.mine(value):
             self.chain.append(block)
+
+    def check_balances(self, accepted):
+        balances = accepted
+        for transaction in self.transaction_queue:
+            t = transaction[1:-1]
+            t.split(',')
+            if t[0] not in balances:
+                balances[t[0]] = -float(t[2])
+            else:
+                balances[t[0]] -= float(t[2])
+            if t[1] not in balances:
+                balances[t[1]] = float(t[2])
+            else:
+                balances[t[1]] += float(t[2])
+        return balances
 
     def verify(self):
         for id, block in enumerate(self.chain):
