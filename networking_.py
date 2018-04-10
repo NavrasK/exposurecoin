@@ -1,8 +1,9 @@
 # Networking 2.0 for testing purposes
 
-from btpeer_ import BTPeer
+# This only handles local networking and is purely for demonstration, 
+# as interdevice communication did not work on the VM
 
 class Network():
     def __init__(self):
-        self.p2p = BTPeer
-        
+        self.ip = '127.0.0.1' # Localhost
+        self.peers = {}

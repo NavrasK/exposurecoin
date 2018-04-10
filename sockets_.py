@@ -29,21 +29,29 @@ except:
 #     except:
 #         print("ERROR: Could not unpack from peer")
 
-class FileShareNode:
-    def __init__(self, data):
-        self.file_content = data
-        self.s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-        self.s.bind(('',0))
-        print('Listening for peers @ UDP port %s' % self.s.getsockname()[1])
-        thread._start_new_thread(self._sock_thread,())
-    def handle_ping(self, in_data, addr):
-        reply_data = msgpack.packb({'msgtype':'pong', 'replyto':in_data['msgid']})
-        self.s.sendto(reply_data, addr)
-    def _sock_thread(self):
-        while True:
-            in_data, in_addr = self.s.recvfrom(65536) 
-            data = msgpack.unpackb(in_data)
-            pprint.pprint((in_addr, data))
+# class FileShareNode:
+#     def __init__(self, data):
+#         self.file_content = data
+#         self.s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+#         self.s.bind(('',0))
+#         print('Listening for peers @ UDP port %s' % self.s.getsockname()[1])
+#         thread._start_new_thread(self._sock_thread,())
+#     def handle_ping(self, in_data, addr):
+#         reply_data = msgpack.packb({'msgtype':'pong', 'replyto':in_data['msgid']})
+#         self.s.sendto(reply_data, addr)
+#     def _sock_thread(self):
+#         while True:
+#             in_data, in_addr = self.s.recvfrom(65536) 
+#             data = msgpack.unpackb(in_data)
+#             pprint.pprint((in_addr, data))
 
-if __name__ == "__main__":
-    node = FileShareNode({})
+# if __name__ == "__main__":
+#     node = FileShareNode({})
+
+'''
+my_ip = '137.186.75.147'
+jesse_ip = '68.151.31.79'
+my_vm = 44567
+jesse_host = 54132
+jesse_vm = 46691
+'''
