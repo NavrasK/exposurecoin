@@ -7,7 +7,7 @@ from encryption_ import Keys as k
 rsa
 
 def transaction(sender_sk, sender_uid, reciever_uid, amount):
-    signature = k.sign(amount, sender_sk)
+    signature = k.signature(amount, sk=sender_sk)
     txn = {u'sender':sender_uid, u'reciever':reciever_uid, u'amount':amount, u'sig':signature}
     return txn
 
