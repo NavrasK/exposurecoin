@@ -4,7 +4,6 @@ import time
 import sys
 import rsa
 from user import User
-from xp import Chain as blockchain
 
 valid_cmd = {"balances" : "Refreshes and displays the total balance for all users", \
              "chain" : "Displays the current state of the blockchain for the selected user" , \
@@ -54,6 +53,13 @@ def need_help(i):
         i = 0
     return i
 
+
+def format_transaction(sender_sk, sender_uid, reciever_uid, amount):
+    signature = k.sign(amount, sender_sk)
+    txn = {u'sender': sender_uid, u'reciever': reciever_uid, u'amount': amount, u'sig': signature}
+    return txn
+
+
 def new_transaction():
     i = 0
     while True:
@@ -81,7 +87,8 @@ def new_transaction():
         else:
             i = need_help(i)
             continue
-    transaction = '(' + trx_from + ',' + trx_to + ',' + str(trx) + ')'
+
+    transaction = format_transaction(users[trx_from].sk, trx_from, trx_to, trx)
     return transaction
 
 def broadcast(transaction, targets = ['a', 'b', 'c', 'd', 's']):
@@ -98,7 +105,7 @@ def view_chain(u):
 
 def view_queue(u):
     print("VIEWING QUEUE")
-    
+
 def handle_cmd():
     i = 0
     while True:
@@ -110,8 +117,7 @@ def handle_cmd():
             continue
     print(valid_cmd[cmd])
     if cmd == 'balances':
-        accepted = blockchain.get_balance()
-        print("CURRENT BALANCE: \n" + s.check_balances(accepted))
+        print("CURRENT BALANCE: \n" + s.check_balances())
 
     elif cmd == 'chain':
         print("View chain for which user? (Default: You)")
