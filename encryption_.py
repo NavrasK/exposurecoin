@@ -38,7 +38,7 @@ class Keys():
 
     def verify(self, message, signature, uid):
         self.refreshKeys()
-        return rsa.verify(message, signature, keys[uid])
+        return rsa.verify(message, signature, self.keys[uid])
 
     def refreshKeys(self):
         # Checks the list of public keys and refreshes the dictionary

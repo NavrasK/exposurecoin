@@ -53,7 +53,7 @@ class XP():
         self.previous_hash = previous_hash
         self.minted = False
         self.hash = self.grind_xp()
-        self.k = Keys()
+        self.k = encryptor()
 
     def grind_xp(self):
         # Tries to find the SHA256 Hash which begins with the sequence 'abc123'
