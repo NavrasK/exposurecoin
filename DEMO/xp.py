@@ -26,7 +26,7 @@ class Block():
 
     def __init__(self, previous_hash = None):
         self.hash = None
-        self.previous_hash = None
+        self.previous_hash = previous_hash
         self.transactions = []
         self.timestamp = None
         self.full = False
@@ -46,9 +46,9 @@ class Block():
         diff = 3
         test_hash = k.encrpyt(str(self.previous_hash)+str(self.transactions.json.dumps(transactions, sort_keys=True))+str(value))
         code = '0' * diff
-            if testHash[0:diff] == code:
-                self.hash = test_hash
-                return True
+        if testHash[0:diff] == code:
+            self.hash = test_hash
+            return True
         return False
         
 
@@ -59,7 +59,7 @@ class Chain():
 
     def __contains__(self, block):
         for b in chain:
-            if b.hash  == block.hash
+            if b.hash == block.hash
                 return True
         return False
 
