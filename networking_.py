@@ -7,13 +7,26 @@ import socket
 import pprint
 import sys
 import os
+import Queue
 import time
 import threading as threader
 from handler_ import PastebinHandler as PBH
 try:
     import msgpack 
 except:
-    raise ImportError("Install msgpack with 'sudo pip3 install msgpack-python'")
+    raise ImportError("Install msgpack with 'sudo pip3 install msgpack'")
+try:
+    import bluelet
+except:
+    raise ImportError("Install bluelet with 'sudo pip3 install bluelet'")
+
+class netThread(threader.Thread):
+    def __init__(self, threadID, q):
+        threader.Thread.__init__(self)
+        self.threadID = threadID
+        self.q = q
+    def run(self):
+        print('bleh')
 
 class Network():
     def __init__(self, data):
@@ -27,7 +40,9 @@ class Network():
             print('Listening for peers @ UDP port %s' % self.s.getsockname()[1])
 
     def start_socket(self):
+        print("starting")
         threader._start_new_thread(self.socket_thread(), ())
+        print("ending")
 
     def socket_thread(self):
         while True:
@@ -46,5 +61,5 @@ class Network():
 
 if __name__ == "__main__":
     net = Network({})
-    net.start_socket()
+    threader._start_new_thread(net.start_socket, ())
     print("DONE")

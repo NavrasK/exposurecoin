@@ -30,9 +30,11 @@ CONVENTIONS:
 External class files are named as "name_.py" in all lowercase
 
 PREREQUISITES:
-install pyyaml with "$ pip install pyyaml" 
-install beautifulsoup with "$ pip install beautifulsoup4" 
-install msgpack with "$ pip install msgpack-python"
+install pyyaml with "$ sudo pip install pyyaml" 
+install beautifulsoup with "$ sudo pip install beautifulsoup4" 
+install msgpack with "$ sudo pip install msgpack"
+install rsa with "$ sudo pip install rsa"
+install bluelet with "$ sudo pip install bluelet"
 create a pastebin account and get your dev API key 
 
 CREDITS: 
