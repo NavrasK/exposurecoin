@@ -37,7 +37,8 @@ def createGenesis():
 
 
 class XP():
-    difficulty = 3
+    difficulty = 3 # The difficulty determines the average length of time it takes to create a block
+                   # The chance any guess is correct is 1/[16^difficulty]
 
     def __init__(self, chain = None, transactions = None):
         self.chain = chain
@@ -48,7 +49,7 @@ class XP():
         previous = chain[-1]
         previousHash = previous[u'hash']
         self.num = previous[u'contents'][u'blockNum'] + 1
-        self.contents = {u'blockNum':num, u'previousHash':previousHash}
+        self.contents = {u'blockNum':self.num, u'previousHash':previousHash}
 
     def __str__(self):
         return str(self.num)
