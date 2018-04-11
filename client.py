@@ -1,13 +1,7 @@
-from extern.net.test import testingtesting
-from extern.net.objectify import Objectify
+# Store external functions in the extern folder, in their proper category.  To reference those files do
+# from extern.GROUP.FILE import FUNCTION/CLASS
 
 class Client():
-    def __init__(self):
+    def __init__(self, iswin):
         print("CLIENT INITIALIZED")
-        self.obj = Objectify()
-        self._test_function()
-
-    def _test_function(self):
-        print("TEST")
-        testingtesting()
-        self.obj.printit()
+        self.iswin = iswin # Host operating system, True if running on windows, False otherwise
