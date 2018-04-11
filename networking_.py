@@ -7,7 +7,7 @@ import socket
 import pprint
 import sys
 import os
-import Queue
+#import Queue
 import time
 import threading as threader
 from handler_ import PastebinHandler as PBH

@@ -4,15 +4,6 @@ import json
 import time as timer
 from encryption_ import Keys as k
 
-<<<<<<< HEAD
-rsa
-
-def transaction(sender_sk, sender_uid, reciever_uid, amount):
-    signature = k.signature(amount, sk=sender_sk)
-    txn = {u'sender':sender_uid, u'reciever':reciever_uid, u'amount':amount, u'sig':signature}
-    return txn
-=======
->>>>>>> 1618e36c2a470f37bf926efaa895cff70a1696b2
 
 def verify_txn(txn):
     uid, signature, amount = txn['sender'], txn['signature'], txn['amount']
