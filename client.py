@@ -4,4 +4,4 @@
 class Client():
     def __init__(self, iswin):
         print("CLIENT INITIALIZED")
-        self.iswin = iswin # Host operating system, True if running on windows, False otherwise
+        self.iswindows = iswin # Host operating system, True if running on windows, False otherwise
