@@ -2,11 +2,11 @@ import pathlib
 import os
 
 class User():
-    def __init__(self, id_key, p_key, pword):
+    def __init__(self, id_key, p_key):
         self.id_key = id_key # User ID is essentially your public key and username
-        self.id_dir = '/files/'+self.id_key
+        self.id_dir = '/files/users/'+self.id_key # The path to this user's local folder
         self.p_key = p_key # Key is your private key (DO NOT LOSE IT!)
-        self.pword = pword
+        self.savekey()
 
     def savekey(self):
         # NOTE: Untested as of right now, but it basically saves your private key to a file
