@@ -1,11 +1,11 @@
 # Store external functions in the extern folder, in their proper category.  To reference those files do
 # from extern.GROUP.FILE import FUNCTION/CLASS
 
-import extern.arc.transaction as transaction
+import extern.arc.transaction as txn
 import extern.arc.xp as xp
-import extern.enc.encrypt as encrypt
+import extern.enc.encrypt as k
 import extern.gui.interface as gui
-import extern.net.network as network
+import extern.net.network as net
 import extern.usr.user as u
 import extern.mis.misc as misc
 
