@@ -1,4 +1,5 @@
 import extern.arc.tree as tree
+# Do we want to try anytree library instead?
 
 class Chain():
     def __init__(self):
