@@ -3,6 +3,7 @@
 
 import extern.arc.transaction as txn
 import extern.arc.xp as xp
+import extern.arc.blockchain as chain
 import extern.enc.encrypt as k
 import extern.gui.interface as gui
 import extern.net.network as net
