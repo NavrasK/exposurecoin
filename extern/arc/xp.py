@@ -12,5 +12,13 @@ class XP():
     def getTransactions(self):
         trx = {}
         for i in self.data:
-            trx.update(i.getTransaction)
+            trx = self.updateTransactions(trx, i.getTransaction)
         return trx
+
+    def updateTransactions(self, trxlist, transaction):
+        for i in transaction:
+            if i in trxlist:
+                trxlist[i] += transaction[i]
+            else:
+                trxlist[i] = transaction[i]
+        return trxlist
