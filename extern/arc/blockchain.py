@@ -1,5 +1,5 @@
 import extern.arc.tree as tree
-# Do we want to try anytree library instead?
+# TODO: Do we want to try anytree library instead?
 
 class Chain():
     def __init__(self):
@@ -14,6 +14,7 @@ class Chain():
         return trx
 
     def updateTransactions(self, trxlist, transaction):
+        # Modifies overall balance per user as it goes down the list of transactions
         for i in transaction:
             if i in trxlist:
                 trxlist[i] += transaction[i]

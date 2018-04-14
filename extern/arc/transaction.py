@@ -7,6 +7,9 @@ class Transaction():
         self.quantity = int(quantity)
 
     def getTransaction(self):
+        # Returns a dictionary with two entries, showing that the sender loses as much currency
+        # as the recipient will gain.  NOTE: Transactions in EXPcoin are only in whole quantities 
+        # (ie no such thing as 0.001EXP, just integers)
         return {self.sender:-(self.quantity), self.recipient:self.quantity}
 
 # NOTE: Transactions are to be signed by the private key of the sender, and can be decrypted with

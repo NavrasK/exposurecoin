@@ -9,3 +9,6 @@
 #       user ID / public key.  It is assumed that in a real application of this 
 #       this file wouldn't be so readily editable, but it is slightly more realistic
 #       than simply having a locally stored txt file for everything
+
+# NOTE: The above may or may not be false, still working on other architecture first,
+#       but as of right now there is nothing here, just leave it for now

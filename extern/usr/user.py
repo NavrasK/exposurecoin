@@ -7,6 +7,7 @@ class User():
         self.id_dir = '/files/users/'+self.id_key # The path to this user's local folder
         self.p_key = p_key # Key is your private key (DO NOT LOSE IT!)
         self.savekey()
+        print("User Created")
 
     def savekey(self):
         # NOTE: Untested as of right now, but it basically saves your private key to a file

@@ -4,13 +4,13 @@ import hashlib
 
 class Encrypt():
     def __init__(self):
-        self.k = rsa
+        print("Encryption Active")
     
     def generateNonce(self):
-        # Generate a random value to combine with hases
+        # Generate a random 1024 byte sequence it sequence to combine with hashes
         s = ''
-        for _ in range(2048):
-            s += random.randint(0,1)
+        for _ in range(1024):
+            s += random.randint(0,15)
         return int(s)
 
     def pair(self):

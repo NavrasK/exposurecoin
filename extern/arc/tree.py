@@ -1,4 +1,4 @@
-# TODO: Implement a tree
+# TODO: Implement a tree.  Jesse, plese do this
 
 class Tree():
     def __init__(self):

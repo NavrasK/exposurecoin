@@ -1,3 +1,5 @@
+# The main file which links together all the parts of the project.
+
 # Store external functions in the extern folder, in their proper category.  To reference those files do
 # from extern.GROUP.FILE import FUNCTION/CLASS
 
