@@ -1,20 +1,39 @@
 import pathlib
 import os
+import enc.encrypt as k # I have broken the rules :( ...Importing encryption methods
 
 class User():
-    def __init__(self, id_key, p_key):
-        self.id_key = id_key # User ID is essentially your public key and username
-        self.id_dir = '/files/users/'+self.id_key # The path to this user's local folder
-        self.p_key = p_key # Key is your private key (DO NOT LOSE IT!)
-        self.savekey()
+    def __init__(self, name):
+        self.name = name # Name is your username and password in a way
+        self.id_key =  None # IDKey is your public key
+        self.dir = '/files/users/'+self.name # The path to this user's local folder
+        self.p_key = None # Key is your private key (DO NOT LOSE IT!)
+        self.usrkeys = {}
+        self.login()
         print("User Created")
 
-    def savekey(self):
-        # NOTE: Untested as of right now, but it basically saves your private key to a file
-        #       if you haven't already so that you don't lose it
-        pathlib.Path(self.id_dir).mkdir(exist_ok=True)
-        with open(self.id_dir + "/privatekey.txt") as file:
+    def login(self):
+        pathlib.Path(self.dir).mkdir(exist_ok=True)
+        with open(self.dir+"/private.txt") as file:
             file.seek(0)
             if not file.read(1):
-                file.seek(0)
+                file.truncate(0)
+                self.newUser()
                 file.write(str(self.p_key))
+            else:
+                file.seek(0)
+                self.p_key = file.readline()
+        self.getPublicId()
+
+    def newUser(self):
+        self.id_key, self.p_key = k.pair()
+        with open("../../../files/users/publickeys.txt", 'a') as file:
+            file.write(k.hash(self.p_key, 'EXPOSURE')+":"+self.id_key)
+    
+    def getPublicId(self):
+        with open("../../../files/users/publickeys.txt", 'r') as file:
+            for line in file:
+                hashedkey, public = line.split(':')
+                self.usrkeys[hashedkey] = public
+        self.id_key = self.usrkeys[k.hash(self.p_key, 'EXPOSURE')]
+
