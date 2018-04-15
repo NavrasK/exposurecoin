@@ -3,7 +3,7 @@ import extern.arc.tree as tree
 
 class Chain():
     def __init__(self):
-        self.chain = {}
+        self.chain = []
         self.conflict_tree = tree
 
     def get_accepted(self):
@@ -21,3 +21,7 @@ class Chain():
             else:
                 trxlist[i] = transaction[i]
         return trxlist
+
+    def updateChain(self):
+        # Gets the chains from all other users and sets itself to the best one
+        print("TODO")

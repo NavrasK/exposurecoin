@@ -12,3 +12,5 @@
 
 # NOTE: The above may or may not be false, still working on other architecture first,
 #       but as of right now there is nothing here, just leave it for now
+
+# NOTE: Networking has been moved to usr due to file system constraints
