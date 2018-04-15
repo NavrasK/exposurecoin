@@ -1,6 +1,7 @@
 import pathlib
 import os
-import enc.encrypt as k # I have broken the rules :( ...Importing encryption methods
+import hashlib
+import rsa
 
 class User():
     def __init__(self, name):
@@ -26,14 +27,13 @@ class User():
         self.getPublicId()
 
     def newUser(self):
-        self.id_key, self.p_key = k.pair()
+        self.id_key, self.p_key = rsa.newkeys(2048)
         with open("../../../files/users/publickeys.txt", 'a') as file:
-            file.write(k.hash(self.p_key, 'EXPOSURE')+":"+self.id_key)
+            file.write(hashlib.sha256(self.p_key+"EXPOSURE")+":"+self.id_key)
     
     def getPublicId(self):
         with open("../../../files/users/publickeys.txt", 'r') as file:
             for line in file:
                 hashedkey, public = line.split(':')
                 self.usrkeys[hashedkey] = public
-        self.id_key = self.usrkeys[k.hash(self.p_key, 'EXPOSURE')]
-
+        self.id_key = self.usrkeys[hashlib.sha256(self.p_key+"EXPOSURE")]

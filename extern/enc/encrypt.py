@@ -14,7 +14,7 @@ class Encrypt():
         return int(s)
 
     def pair(self):
-        # Generates a public private key pair, saves private key to this object and returns public
+        # Generates a public private key pair, then returns them
         publickey, privatekey = rsa.newkeys(2048)
         return publickey, privatekey
 
