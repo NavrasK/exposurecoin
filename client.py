@@ -7,6 +7,7 @@ import xp
 import encryption as k
 import tkinter
 import time
+import pickle
 
 # NOTE: All files in extern should be totally independent of anything, or at least anything outside
 #       of their group.  Their interconnection should be totally built in this file
@@ -25,9 +26,14 @@ class Client():
         self.users[uname] = u.User(uname, self.getChain(), self.getBlock())
 
     def getChain(self):
-        chains = []
-        for u in self.users:
-            chains.append(u.blockchain)
+        # Assumes that the client would connect and request the chain from all user, getting the 
+        # correct one. As networking isn't in the scope of this project anymore it is just going
+        # to pull from a master file which is always correct for proof of concept
+        chain = list()
+        with open('/users/MASTER/masterchain.xpc', 'r') as file:
+            for _ in file:
+                chain.append(pickle.load(file))
+        return chain
 
     def getBlock(self):
         blocks = []

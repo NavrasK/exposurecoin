@@ -7,10 +7,13 @@ class XP():
     def __init__(self, ind, prev_hash, data, nonce):
         self.index = ind                # This blocks index on the blockchain
         self.prev_hash = prev_hash()    # The previous blocks hash
-        self.timestamp = time.time()    # The time this block was created
         self.data = data                # Contains a list of transaction objects
+        self.numTransactions = 0        # Block will need to be minted if this is equal to 4 transactions
+        self.minted = False             # The block is only minted when it contains enough transactions
+        self.timestamp = None           # The time this block was mined
         self.hash = None                # This blocks hash, following the proof of work
         self.nonce = nonce              # The nonce that created the accepted hash for this block
+        
 
     def getTransactions(self):
         # Returns a list of transactions stored in the block data
