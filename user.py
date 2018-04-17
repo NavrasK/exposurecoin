@@ -48,7 +48,7 @@ class User():
         
         with open('users/MASTER/masterblock.xpc', 'r') as file:
             ind = int(file.readline())
-            prev_hash = str(file.readline())
+            prev_hash = file.readline()
             data = []
             for _ in file:
                 data.append(pickle.load(file))

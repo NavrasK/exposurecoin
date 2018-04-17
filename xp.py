@@ -6,7 +6,7 @@ import encryption as k
 class XP():
     def __init__(self, ind, prev_hash, data):
         self.index = ind                # This blocks index on the blockchain
-        self.prev_hash = prev_hash()    # The previous blocks hash
+        self.prev_hash = prev_hash      # The previous blocks hash
         self.data = data                # Contains a list of transaction objects
         self.numTransactions = 0        # Block will need to be minted if this is equal to 4 transactions
         self.minted = False             # The block is only minted when it contains enough transactions

@@ -1,0 +1,6 @@
+CMPUT 275 Final project
+EXPOSUREcoin Cryptocurrency
+Created by Navras Kamal (1505463)
+
+The project can be located at https://github.com/NavrasK/exposurecoin
+View the README there for more info
