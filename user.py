@@ -9,7 +9,7 @@ class User():
     def __init__(self, name):
         self.name = str(name) # Name is what you use to chose your account, essentially your login
         self.id = k.hash(self.name, "EXPOSURE") # Hashed version of your name to make "login" more secure
-        self.public_key =  None # Initilize public / private keys
+        self.public_key =  None # Initilize public / private key set
         self.private_key = None
         self.getRestoreKeys() # Restore or generate keys
         # Initilalize blockchain system

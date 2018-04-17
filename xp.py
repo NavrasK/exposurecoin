@@ -1,4 +1,4 @@
-# all the guts of the cryptocoin
+# all the guts of the cryptocoin TODO need to fix this
 
 import time
 import encryption as k
@@ -39,6 +39,5 @@ class Transaction():
 
     def getTransaction(self):
         # Returns a dictionary with two entries, showing that the sender loses as much currency
-        # as the recipient will gain.  NOTE: Transactions in EXPcoin are only in whole quantities 
-        # (ie no such thing as 0.001EXP, just integers)
+        # as the recipient will gain. 
         return {self.sender:-(self.quantity), self.recipient:self.quantity}
