@@ -12,8 +12,7 @@ class XP():
         self.minted = False             # The block is only minted when it contains enough transactions
         self.timestamp = None           # The time this block was mined
         self.hash = None                # This blocks hash, following the proof of work
-        self.nonce = None               # The nonce that created the accepted hash for this block
-        
+        self.nonce = None               # The nonce that created the accepted hash for this block    
 
     def getTransactions(self):
         # Returns a list of transactions stored in the block data
