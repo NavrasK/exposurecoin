@@ -23,22 +23,7 @@ class Client():
 
     def newUser(self):
         uname = str(input("Enter Username: ").rstrip())
-        self.users[uname] = u.User(uname, self.getChain(), self.getBlock())
-
-    def getChain(self):
-        # Assumes that the client would connect and request the chain from all user, getting the 
-        # correct one. As networking isn't in the scope of this project anymore it is just going
-        # to pull from a master file which is always correct for proof of concept
-        chain = list()
-        with open('/users/MASTER/masterchain.xpc', 'r') as file:
-            for _ in file:
-                chain.append(pickle.load(file))
-        return chain
-
-    def getBlock(self):
-        blocks = []
-        for u in self.users:
-            blocks.append(u.block)
+        self.users[uname] = u.User(uname)
 
     def main(self):
         # This is the main loop of the program
