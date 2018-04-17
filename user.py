@@ -17,8 +17,7 @@ class User():
         self.blockchain = self.getChain()
         ind, prev_hash, data = self.getBlock()
         self.block = self.newBlock(ind, prev_hash, data)
-        print("\nUSER READY")
-        print("Welcome to EXPOSUREcoin " + self.name + "!")
+        print("\nUSER READY: Welcome to EXPOSUREcoin " + self.name + "!")
 
     def getRestoreKeys(self):
         # Retreives or generates and stores a public private key pair
@@ -40,14 +39,14 @@ class User():
         # correct one. As networking isn't in the scope of this project anymore it is just going
         # to pull from a master file which is always correct for proof of concept
         chain = list()
-        with open('users/MASTER/masterchain.xpc', 'r') as file:
+        with open('MASTER/masterchain.xpc', 'r') as file:
             for _ in file:
                 chain.append(pickle.load(file))
         return chain
 
     def getBlock(self):
         # Restores the block on the master when initialized, same reasoning as in getChain
-        with open('users/MASTER/masterblock.xpc', 'r') as file:
+        with open('MASTER/masterblock.xpc', 'r') as file:
             ind = int(file.readline())
             prev_hash = file.readline()
             data = []

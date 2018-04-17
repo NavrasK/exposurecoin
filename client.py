@@ -9,6 +9,7 @@ import tkinter
 import time
 import sys
 import os
+import shutil
 import string
 import random
 
@@ -21,6 +22,9 @@ class Client():
         # NOTE This isn't useful right now, the distinction really isn't taken into account anymore
         # Set up the user database
         self.users = {}
+        print("LOGGING IN PREVIOUS USERS")
+        print("(THIS MAY TAKE SOME TIME...)")
+        self.loginExisting()
         # Start the program proper
         print("INITIALIZING>>>")
         self.spinner(0.5)
@@ -38,10 +42,31 @@ class Client():
                 sys.stdout.flush()
         sys.stdout.write('\r')
 
-    def newUser(self):
+    def loginExisting(self):
+        # Goes over the existing files and logs them in on startup
+        for subdir, dirs, files in os.walk('./users/'):
+            for file in files:
+                print("\nLogging in from " + str(subdir) + str(dirs) + str(file))
+                self.newUser(file.split('.')[0])
+
+    def newUser(self, uname = None):
         # Creates or "logs in" a user by creating and accessing files that represent that user
-        uname = str(input("Enter Username: ").rstrip())
+        if uname == None:
+            uname = str(input("Enter Username: ").rstrip())
         self.users[uname] = u.User(uname)
+
+    def generateUsers(self):
+        # Generates random names for the users and checks if they aren't already used before creating a user for it
+        numUsers = int(input("\nHOW MANY USERS TO GENERATE? (positive #)\n>> "))
+        if numUsers > 0:
+            for _ in range(numUsers):
+                while True:
+                    testname = ''.join(random.choices(string.ascii_lowercase + string.digits, k=random.randint(5,8)))
+                    if testname not in self.users:
+                        break
+                self.newUser(testname)
+        else:
+            print("INVALID INPUT, RETURNING TO MAIN MENU")
 
     def listUsers(self):
         # Displays all logged in users
@@ -116,6 +141,7 @@ class Client():
 
     def view(self):
         # Base function for viewing information on a user or the master set
+        self.listUsers()
         print("\nMODE SELECT:")
         print("1: 'master' to view Master data")
         if len(self.users) > 0:
@@ -155,14 +181,25 @@ class Client():
                 break
             elif cmd == '1' or cmd == 'user':
                 self.newUser()
-            elif cmd == '2' or cmd == 'trxn':
+            elif cmd == '2' or cmd == 'genr':
+                self.generateUsers()
+            elif cmd == '3' or cmd == 'trxn':
                 if len(self.users) < 2:
                     print("ERROR: NOT ENOUGH USERS ON NETWORK")
                     continue
                 else:
                     self.newTransaction()
-            elif cmd == '3' or cmd == 'view':
+            elif cmd == '4' or cmd == 'view':
                 self.view()    
+            elif cmd == '275' or cmd == 'rm':
+                sure = str(input("ARE YOU SURE (this cannot be undone) Y/N \n>> ").rstrip()).lower()
+                if sure == 'y':
+                    shutil.rmtree('users')
+                    print("USERS DELETED")
+                    continue
+                else:
+                    print("USERS NOT DELETED")
+                    continue
             else:
                 print("ERROR: INVALID INPUT")
                 continue
@@ -177,5 +214,7 @@ class Client():
         print("LIST OF COMMANDS:")
         print("0: 'exit' to EXIT")
         print("1: 'user' to login to or create a new user")
-        print("2: 'trxn' to set up a transaction between users")
-        print("3: 'view' to view the state of a user or Master")
+        print("2: 'genr' to generate a set of users randomly")
+        print("3: 'trxn' to set up a transaction between users")
+        print("4: 'view' to view the state of a user or Master")
+        print("275: 'rm' to delete all users")
