@@ -21,6 +21,7 @@ class Client():
         print("CLIENT INITIALIZED")
 
     def newUser(self):
+        # Creates or "logs in" a user
         uname = str(input("Enter Username: ").rstrip())
         self.users[uname] = u.User(uname)
 
