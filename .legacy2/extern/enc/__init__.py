@@ -14,3 +14,5 @@
 #           Signs an input with a provided key
 #       verify
 #           Tries to decrypt an input with a provided key
+#
+# NOTE: MOVED TO USER 
