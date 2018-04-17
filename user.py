@@ -16,8 +16,8 @@ class User():
         self.blockchain = self.getChain()
         ind, prev_hash, data = self.getBlock()
         self.block = self.newBlock(ind, prev_hash, data)
-        print("USER READY")
-        print("Welcome " + self.name + "!")
+        print("\nUSER READY")
+        print("Welcome to EXPOSUREcoin " + self.name + "!")
 
     def getRestoreKeys(self):
         # Retreives or generates and stores a public private key pair

@@ -29,5 +29,5 @@ if operatingsys == "win":
 else:
     iswin = False
 
-print("\nWELCOME TO EXPOSUREcoin! \nCreated by Navras Kamal\n")
+print("\nWelcome to EXPOSUREcoin! \n-Created by Navras Kamal\n")
 client.Client(iswin)

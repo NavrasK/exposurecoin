@@ -17,8 +17,8 @@ class Client():
         # Set up the user database
         self.users = {}
         # Start the program proper
-        self.main()
         print("CLIENT INITIALIZED")
+        self.main()
 
     def newUser(self):
         # Creates or "logs in" a user
@@ -33,7 +33,7 @@ class Client():
     def newTransaction(self):
         print("\nNEW TRANSACTION")
         self.listUsers()
-        sender = str(input("SENDER (enter their exact name) \n>> ").rstrip())
+        sender = str(input("\nSENDER (enter their exact name) \n>> ").rstrip())
         if sender not in self.users:
             print("NOT A VALID USER, RETURN TO MAIN MENU")
             return
@@ -41,20 +41,22 @@ class Client():
         if recipient not in self.users or recipient == sender:
             print("NOT A VALID USER, RETURN TO MAIN MENU")
             return
-        value = input("AMOUNT (enter a number) \n>> ").rstrip()
-        if not isinstance(value, int) or not isinstance(value, float):
+        value = float(input("AMOUNT (enter a number) \n>> "))
+        if not (isinstance(value, int) or isinstance(value, float)):
             print("INVALID QUANTITY, RETURN TO MAIN MENU")
             return
         print("\nMODE SELECT:")
         print("1: 'leg' Legitimate Transaction")
         print("2: 'inc' Incomplete Transaction")
-        print("Otherwise: Cancel and return to main menu")
+        print("Otherwise: Cancel and return to Main Menu")
         mode = str(input("ENTER MODE (or its #) \n>> ").rstrip()).lower()
         if mode == '1' or mode == 'leg':
             self.legitTxn(sender, recipient, value)
         elif mode == '2' or mode == 'inc':
             self.fakeTxn(sender, recipient, value)
-        return
+        else:
+            print("\nReturning to Main Menu...")
+            return
 
     def legitTxn(self, sender, recipient, value):
         print("\nLEGITMIATE TRANSACTION")
@@ -66,7 +68,7 @@ class Client():
         print("\nMODE SELECT:")
         print("1: 'master' to view Master data")
         print("2: 'user' to view a user's data")
-        print("Otherwise: Cancel and return to main menu")
+        print("Otherwise: Cancel and return to Main Menu")
         mode = str(input("ENTER MODE (or its #) \n>> ").rstrip()).lower()
         if mode == '1' or mode == 'master':
             self.viewMaster()
@@ -85,6 +87,7 @@ class Client():
         # This is the main control loop of the program
         while True:
             self.helpText()
+            print("\nMain Menu")
             cmd = str(input("ENTER COMMAND (or its #) \n>> ").rstrip()).lower()
             if cmd == '0' or cmd == 'exit':
                 break
