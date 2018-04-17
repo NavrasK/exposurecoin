@@ -59,20 +59,19 @@ class User():
         # Creates a new block for the user
         return xp.XP(ind, prev_hash, data)
 
-    def grindXP(self):
+    def grindXP(self, difficulty):
         # "Grinding" XP is like mining bitcoin, it's a proof of work system
-        difficulty = 6 # Requires 6 0's in a row at the beginning of the hased value to be accepted
-        # Each guess is random, thus this has a 1/16777216 chance per guess
         seq = '0' * difficulty
-        while True:
-            nonce = k.generateNonce()
-            hashtry = k.hash(self.block, nonce)
-            if hashtry[0:difficulty] == seq:
-                self.block.timestamp = time.time()
-                self.block.minted = True
-                self.block.nonce = nonce
-                self.block.hash = hashtry
-                self.broadcastBlock()
+        nonce = k.generateNonce()
+        hashtry = k.hash(self.block, nonce)
+        if hashtry[0:difficulty] == seq:
+            self.block.timestamp = time.time()
+            self.block.minted = True
+            self.block.nonce = nonce
+            self.block.hash = hashtry
+            return True
+        else:
+            return False
 
     def broadcastBlock(self):
         print("TODO")
