@@ -3,6 +3,7 @@
 import os
 import encryption as k
 import xp
+import time
 import pickle
 
 class User():
@@ -45,7 +46,7 @@ class User():
         return chain
 
     def getBlock(self):
-        
+        # Restores the block on the master when initialized, same reasoning as in getChain
         with open('users/MASTER/masterblock.xpc', 'r') as file:
             ind = int(file.readline())
             prev_hash = file.readline()
@@ -55,4 +56,23 @@ class User():
             return ind, prev_hash, data
 
     def newBlock(self, ind, prev_hash, data):
+        # Creates a new block for the user
         return xp.XP(ind, prev_hash, data)
+
+    def grindXP(self):
+        # "Grinding" XP is like mining bitcoin, it's a proof of work system
+        difficulty = 6 # Requires 6 0's in a row at the beginning of the hased value to be accepted
+        # Each guess is random, thus this has a 1/16777216 chance per guess
+        seq = '0' * difficulty
+        while True:
+            nonce = k.generateNonce()
+            hashtry = k.hash(self.block, nonce)
+            if hashtry[0:difficulty] == seq:
+                self.block.timestamp = time.time()
+                self.block.minted = True
+                self.block.nonce = nonce
+                self.block.hash = hashtry
+                self.broadcastBlock()
+
+    def broadcastBlock(self):
+        print("TODO")

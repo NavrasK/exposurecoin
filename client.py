@@ -26,11 +26,14 @@ class Client():
         self.users[uname] = u.User(uname)
 
     def listUsers(self):
+        # Displays all logged in users
         print("\nONLINE USERS:")
         for u in self.users:
             print(u)
 
     def newTransaction(self):
+        # Sets up the variables for a new transaction and allows it to be sent to everyone (legit) or
+        # to fewer than half the users (incomplete, potentially malicious)
         print("\nNEW TRANSACTION")
         self.listUsers()
         sender = str(input("\nSENDER (enter their exact name) \n>> ").rstrip())
@@ -59,10 +62,14 @@ class Client():
             return
 
     def legitTxn(self, sender, recipient, value):
+        # 
         print("\nLEGITMIATE TRANSACTION")
 
     def fakeTxn(self, sender, recipient, value):
         print("\nINCOMPLETE / FALSE TRANSACTION")
+
+    def broadcastTransaction(self):
+        print("TODO")
 
     def view(self):
         print("\nMODE SELECT:")
