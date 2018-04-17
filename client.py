@@ -24,22 +24,39 @@ class Client():
         uname = str(input("Enter Username: ").rstrip())
         self.users[uname] = u.User(uname)
 
+    def listUsers(self):
+        print("USERS:")
+        for u in self.users:
+            print(u)
+
     def newTransaction(self):
+        print("NEW TRANSACTION")
+        self.listUsers()
+        sender = str(input("SENDER (enter their exact name) \n>> ").rstrip())
+        if sender not in self.users:
+            print("NOT A VALID USER, RETURN TO MAIN MENU")
+            return
+        recipient = str(input("RECIPIENT (enter their exact name) \n>> ").rstrip())
+        if recipient not in self.users:
+            print("NOT A VALID USER, RETURN TO MAIN MENU")
+            return
+        value = input("RECIPIENT (enter their exact name) \n>> ").rstrip()
         print("MODE SELECT:")
         print("1: 'leg' Legitimate Transaction")
         print("2: 'inc' Incomplete Transaction")
         print("Otherwise: Return to main menu")
         mode = str(input("ENTER MODE (or its #) \n>> ").rstrip()).lower()
         if mode == '1' or mode == 'leg':
-            self.legitTxn()
+            self.legitTxn(sender, recipient, value)
         elif mode == '2' or mode == 'inc':
-            self.fakeTxn()
+            self.fakeTxn(sender, recipient, value)
         return
 
-    def legitTxn(self):
+    def legitTxn(self, sender, recipient, value):
         print("LEGITMIATE TRANSACTION")
+        self.listUsers()
 
-    def fakeTxn(self):
+    def fakeTxn(self, sender, recipient, value):
         print("INCOMPLETE / FALSE TRANSACTION")
 
     def view(self):
@@ -52,7 +69,8 @@ class Client():
             self.viewMaster()
         elif mode == '2' or mode == 'user':
             self.viewUser()
-        return
+        else:
+            return
 
     def viewMaster(self):
         print("TODO")
