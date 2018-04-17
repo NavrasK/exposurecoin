@@ -4,6 +4,9 @@
 
 import sys
 import client
+import os
+
+os.system('clear')
 
 if sys.platform.startswith('win32'): # Windows device
     # TODO: import as (pip3 install NAME)

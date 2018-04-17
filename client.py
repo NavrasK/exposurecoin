@@ -7,6 +7,8 @@ import xp
 import encryption as k
 import tkinter
 import time
+import sys
+import os
 
 # NOTE: All files in extern should be totally independent of anything, or at least anything outside
 #       of their group.  Their interconnection should be totally built in this file
@@ -17,8 +19,21 @@ class Client():
         # Set up the user database
         self.users = {}
         # Start the program proper
+        print("INITIALIZING>>>")
+        self.spinner(0.5)
+        os.system('clear')
         print("CLIENT INITIALIZED")
         self.main()
+
+    def spinner(self, length):
+        # Displays a spinning cursor
+        t = time.time()
+        while time.time() - t < length:
+            for cursor in '-\\|/':
+                time.sleep(0.1)
+                sys.stdout.write('\r{}'.format(cursor))
+                sys.stdout.flush()
+        sys.stdout.write('\r')
 
     def newUser(self):
         # Creates or "logs in" a user
@@ -74,14 +89,16 @@ class Client():
     def view(self):
         print("\nMODE SELECT:")
         print("1: 'master' to view Master data")
-        print("2: 'user' to view a user's data")
+        if len(self.users) > 0:
+            print("2: 'user' to view a user's data")
         print("Otherwise: Cancel and return to Main Menu")
         mode = str(input("ENTER MODE (or its #) \n>> ").rstrip()).lower()
         if mode == '1' or mode == 'master':
             self.viewMaster()
-        elif mode == '2' or mode == 'user':
+        elif (mode == '2' or mode == 'user') and len(self.users) > 0:
             self.viewUser()
         else:
+            print("\nReturning to Main Menu...")
             return
 
     def viewMaster(self):
@@ -93,6 +110,8 @@ class Client():
     def main(self):
         # This is the main control loop of the program
         while True:
+            time.sleep(1)
+            os.system('clear')
             self.helpText()
             print("\nMain Menu")
             cmd = str(input("ENTER COMMAND (or its #) \n>> ").rstrip()).lower()
@@ -110,12 +129,15 @@ class Client():
                 self.view()    
             else:
                 print("ERROR: INVALID INPUT")
-                time.sleep(0.1)
                 continue
+        os.system('clear')
+        self.spinner(0.5)
         print("Thanks for using EXPOSUREcoin!")
+        time.sleep(1)
+        os.system('clear')
     
     def helpText(self):
-        print("\nINDEX OF COMMANDS:")
+        print("LIST OF COMMANDS:")
         print("0: 'exit' to EXIT")
         print("1: 'user' to login to or create a new user")
         print("2: 'trxn' to set up a transaction between users")
