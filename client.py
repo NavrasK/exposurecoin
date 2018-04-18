@@ -9,6 +9,7 @@ import tkinter
 import time
 import sys
 import os
+import glob
 import shutil
 import string
 import random
@@ -217,15 +218,7 @@ class Client():
             elif cmd == '4' or cmd == 'view':
                 self.view()    
             elif cmd == '275' or cmd == 'rm':
-                sure = str(input("ARE YOU SURE (this cannot be undone) Y/N \n>> ").rstrip()).lower()
-                if sure == 'y':
-                    shutil.rmtree('users')
-                    self.users = {}
-                    print("USERS DELETED")
-                    continue
-                else:
-                    print("USERS NOT DELETED")
-                    continue
+                self.resetSystem()
             else:
                 print("ERROR: INVALID INPUT")
                 continue
@@ -238,9 +231,31 @@ class Client():
     def helpText(self):
         # Shows the available commands
         print("LIST OF COMMANDS:")
-        print("0: 'exit' to EXIT")
+        print("0: 'exit' to end the program")
         print("1: 'user' to login to or create a new user")
         print("2: 'genr' to generate a set of users randomly")
         print("3: 'trxn' to set up a transaction between users")
         print("4: 'view' to view the state of a user or Master")
-        print("275: 'rm' to delete all users")
+        print("275: 'rm' to delete all users & reset the system")
+
+    def resetSystem(self):
+        # Resets the entire blockchain and deletes all users
+        sure = str(input("ARE YOU SURE (this cannot be undone, and will reset the blockchain) Y/N \n>> ").rstrip()).lower()
+        if sure == 'y':
+            # Delete everything (all users, master files and stored objects)
+            shutil.rmtree('users/')
+            shutil.rmtree('MASTER/')
+            self.users = {}
+            # Rebuild required files
+            os.makedirs('users/')
+            os.makedirs('MASTER/')
+            with open('MASTER/masterblock.xpc', 'w+') as file:
+                file.write('0\n')
+                file.write('None')
+            with open('MASTER/masterchain.xpc', 'w+') as file:
+                pass
+            with open('MASTER/mastertransactions.xpc', 'w+') as file:
+                pass
+            print("SYSTEM RESET")
+        else:
+            print("NO ACTION TAKEN, RETURNING TO MAIN MENU...")

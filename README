@@ -1,17 +1,15 @@
 EXPOSUREcoin
 CMPUT 275 Final Project, April 2018
-Created by Navras Kamal (1505463) & Jesse Goertzen (1505959)
+Created by Navras Kamal (1505463)
 
 Description:
-A cryptocurrency designed in Python3.  The goal of this project is to demonstrate the 
-ideas and processes behind a cyrptocurrency by creating a usable yet simplified one.  
+A cryptocurrency simulator designed to showcase the ideas behind the blockchain system employed by
+currencies such as Bitcoin.  The project is built in Python3 and is a control system for a virtual
+cryptocurrency network.
 
 Instructions:
-Run main.py to start the program
+Run RUNME.py in the terminal with "python RUNME.py" while in the main directory for this project
+to begin the program.  Follow on screen prompts and read below for information on how to use this tool.
 
-Prerequisites:
-
-References:
-
-Notes:
-The __init__.py files in each of the /etern subfolders contain information for that group of files
+Information:
+TODO

@@ -2,4 +2,5 @@
 *.yaml
 *.pyc
 .vscode
+.xpc
 users/*

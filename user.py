@@ -53,8 +53,8 @@ class User():
             ind = int(file.readline())
             prev_hash = file.readline()
         data = []
-        with open('MASTER/mastertransactions.xpc', 'r') as file:
-            if file.read(1):
+        if os.path.getsize('MASTER/mastertransactions.xpc') > 0:
+            with open('MASTER/mastertransactions.xpc', 'r') as file:
                 file.seek(0)
                 while True:
                     try:
