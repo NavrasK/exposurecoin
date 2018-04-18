@@ -8,8 +8,139 @@ currencies such as Bitcoin.  The project is built in Python3 and is a control sy
 cryptocurrency network.
 
 Instructions:
+Clone this project from my github onto your machine
 Run RUNME.py in the terminal with "python RUNME.py" while in the main directory for this project
-to begin the program.  Follow on screen prompts and read below for information on how to use this tool.
+to begin the program.  
+Follow on screen prompts and read below for information on how to use this tool.
 
 Information:
-TODO
+This project is a demonstration of the blockchain system in action.  It is essentially a program that lets
+you play around with an entire virtual blockchain network all on one machine.  Inside the code itself there
+is comments describing what each part does, but for ease of access here is a rundown of the basic functions
+of this project, how they work and what they represent in the larger context of a blockchain system.
+
+A blockchain system is essentially a way to handle data shared between users so that each user on the network
+will be in consensus as to the contents of the data without having to trust any other users on the network
+explicitly, and without the need for a central authority.  In the practice of Bitcoin the data is the 
+movement of currency between users and the central authority they are avoiding would be something like a 
+bank or the government which handles the creation and monitors the movement of traditional currency.  
+
+The blockchain system achieves this trust due to a combination of cryptography, peer to peer networking and
+some basic assumptions.  Each user is part of a larger peer to peer network which allows packets of data
+to be shared between all users, and each transaction made is signed using a system usually similar to the 
+Diffie-Hellman public / private key based encryption system (depending on their setup).  This can be used
+in a way opposite to what Diffie-Hellman is usually used for.  Instead of encrypting a message so only
+one person can read it, you encrypt it so that anyone can decrypt it with your publicly shared key, so
+they know that the contents of the message must have come from you.  In addition, usually only the sender
+of the currency is allowed to create a transaction, thus if they broadcast a new transaction to the other
+users on the network, you can be fairly certain that the transaction is legitimate and authorized.  
+
+Each transaction is simply a movement of currency.  To find your "balance" you go over all transactions
+and from that can deduce your current net sum.  In some systems you are allowed to "overdraw" and 
+spend more money than you have, which is usually the case in currencies being used in a small group
+where it is used as an intermediary for other forms of currency, in which case a negative balance means
+you owe money to the users with positive balances.  This is the case that is used in EXPOSUREcoin.
+
+That doesn't yet mean that the system is foolproof, however.  It is still possible to cheat the system, 
+accidentally or on purpose, if not all users recieve your signed transaction.  In a malicious case, for 
+example, lets say that there is three people on the network.  Alice has 10XP, and Bob, Charles
+have 0XP.  Alice creates and signs a transaction, sending 10XP to Bob, but doesn't transmit that data to
+Charles.  She then creates and signs another transaction, sending 10XP to Charles, but doesn't tell Bob.  
+In this case both Bob and Charles think that Alice has 0XP and that they each have 10, when in reality
+Alice should have -10XP.  In this case Alice has "double-spent" her currency, which if it was allowed
+would wreck havok on a system where you didn't trust the users.  
+
+To solve this issue there is the idea of the "Blockchain", which is the whole point behind the system.
+Essentially each "block" in the blockchain is a set of transactions along with some other data.  Once
+a condition is met (ie enough time has passed or a number of transactions have been recieved) the user
+will take all their transactions and turn them into a block.  Part of this process involves using the 
+data from a block immediately prior, and this combination creates the "chain" part of the blockchain,
+in that all the blocks are interlinked and can be followed back to a root block, generally known as the
+Genesis block, which contains the initial state of the network.  
+
+The contents of the block are combined with a random value (known as a nonce) and is cryptographically hashed.
+The hash is entrirely dependent on the contents of the block, and thus any changes to the contents would 
+change the hash.  This process is repeated many times until the hash meets a certain requirement.  In 
+EXPOSUREcoin and Bitcoin this requirement is that the start of the hash string must contain some number of
+zeros in a row.  The more zeros required in a row, the harder it is to find the proper nonce.  The chance
+that a given nonce, combined with a block, will produce a sequence of n zeros at the start of a hash string
+is 1/16^n.  If multiple users are trying to hash a block at the same time it is a lot like a lottery
+in terms of who is the first to "mint" a block by finding a correct nonce.  
+
+Generally there is some kind of reward or bounty for the user who mints the block, as an incentive for 
+people to lend their computational power to the network.  The reason for this system of guessing and 
+checking is for "Proof of Work".  One of the assumptions of the blockchain system is that there should
+always be fewer than a third of the users trying to "scam" the system at any given time.  With this Proof
+of Work system it means that it is much more likely for a legitimate block to be minted before an 
+illegitimate one, statiscally.  Thus over time the chain of correct chain will grow faster.
+
+If there is ever a discrepancy between two or more blocks that all referene a specific previous block there
+is a conflict, and this conflict can be resolved thanks to proof of work.  Assuming there are more honest
+users than scammers the conflicts can be resolved by simply waiting until one of the lines becomes longer
+than the others by a large enough margin, then that chain is "accepted" and the rest are discarded.  
+
+So all of this is great in theory, but how can you interact with it thanks to EXPOSUREcoin?  Well the system
+is a lot more simplified, and has a few alternative design choices included.  First of all it is NOT a full
+cryptocurrency, it is purely a simulation that can help explain it and allow you to interact with the ideas.
+Secondly, it is purely local, and you only need to run the program once to simulate the network.  When you
+first run the program it will check your operating system then continue to the main code.  There it will 
+load any previously exisiting users into the network.  Once it is finished initializing you can enter 
+commands to control the system.  To exit enter 0 or 'exit'.
+
+On startup a specific user is created called MASTER.  Master is a special user unique to this demonstration.
+It is not a part of any real blockchain system, but as you are essentially manipulating the network as a
+whole, the Master is your way of controlling everything and keeping track of the state of the network.
+
+If you create a new user it generates the appropriate files, containing it's public and private keys, which
+can be retrieved even if you end the program.  Each user contains their own version of the blockchain and
+their own list of pending transactions.  When a new user is created it pulls from the master list, which is
+a bit of an abstraction of how it would work in a traditional system.  In a traditional system it would 
+query other users on the network to get their versions of the chain, then find what the consensus is from
+among them, however in this case as a master list was being kept for testing and demonstration purposes it 
+was easier to simply pull from it.  Thus the initial state of every new user is that they only have a list
+of the true transactions and blocks, and no incorrect or incomplete data.  
+
+Generate allows you to quickly create a bunch of random users, which can help if you want to test the
+network more.  Note that the more users you create the slower the next startup will be.  
+
+Transaction lets you create either a legitimate or illegitimate transaction between two users on the network.
+You enter the appropriate data and you can then chose if the transaction is legitimate or not.  If it is,
+it is broadcast to all users.  If it is not it is sent to only the sender and recipient.  Over time this
+transaction should be weeded out by the network.  Note that if you spam the incomplete transaction function
+it could cause unintented behaviour, as it is assumed that at most a relatively small number of transactions 
+on the network are false.  
+
+View lets you see the current state of the master list or of a user, which allows you to monitor how they
+handle things over time.  When you view a user you see their logs since the last time you viewed them, and
+what they believe the current state of the network is (TODO).  When you view the master list it shows only
+the true current state of the network.  
+
+Mint allows you to manually cause all users to begin trying to mint the next block.  Due to the scope of this
+project, this is the most abstracted parts.  As all users exist on one machine, and multithreading isn't 
+a part of the course, a workaround is being used.  Each user is lined up at random and will try one at a time
+to guess the nonce.  If they do they are set aside with their order of completion stored and wait until all
+users are done.  This can take a while, and contrary to normal systems it will take LONGER for more users.
+Some settings you can tweak to modify the time it takes to mint the blocks: TODO. Note that the easier it is
+the more likely that an invalid block will be accepted by chance.
+
+Again, as this project is not handling asychronous code all users work one by one until all are done.  
+Finally all users will broadcast their blocks, and recieve the other users blocks.  In addition, the user
+who finished first will get a transaction added to the next block by the MASTER user, awarding them with
+currency from nowhere (debt from Master is never settled), which is how currency is created.  In this way
+the network will grow over time.  
+
+All the users broadcast their blocks in the order they were minted.  It is assumed that ALL users recieve ALL 
+blocks.  They are compared, and check if there is any inconsitencies between the blocks.  If they are all 
+the same (they have the same hash) the duplicates are discarded and it is added to their chain.  If they are
+not, then duplicates are discared and conflicting blocks are held until the next set comes in.  
+If there is a majority of users who have the same block then outliers are discarded.  Otherwise users always
+trust their own block at this point.  Once the next set arrives (based on every users own "previous block")
+another comparison is run, and if the first block that was minted is in a chain with one of the conflicting 
+blocks then it is taken as the new accepted chain and all other conflicting blocks are discarded.  Any 
+other incoming blocks that refrence discarded blocks are also discarded.  At this point, that layer of conflict
+is cleared, and the chain continues like this.  TODO
+
+Finally rm lets you reset the entire system, chain and deletes all users.  Use this if you want to reduce the
+number of users on the networking or for testing purposes.  
+
+Overall this system is a teaching tool more than anything and I hope it helps you!

@@ -133,26 +133,12 @@ class Client():
             pickle.dump(txn, file)
 
     def fakeTxn(self, sender, recipient, value):
-        # An illigitimate transaction is broadcast between the sender and recipient, and less than half the 
-        # rest of the network.  This could be due to software glitches or malicious.  Either way it should
-        # be handled as an invalid transaction by the users over time
+        # An illigitimate transaction is broadcast between the sender and recipient, only 
+        # It should be automatically handled and rejected as an invalid transaction by the users over time
         ver = k.sign('EXPOSURE', sender.private_key)
         txn = xp.Transaction(sender, recipient, value, ver)
-        keys = list(self.users.keys())
         sender.recieveTransaction(txn)
         recipient.recieveTransaction(txn)
-        keys.remove(sender.name)
-        keys.remove(recipient.name)
-        keys.remove('MASTER')
-        # Note that this will not work if there is fewer than 5 users on the network
-        rm = len(keys) / 2 + 2
-        random.shuffle(keys)
-        for key in keys:
-            if rm > 0:
-                # Causes the transaction to NOT be sent to more than half the users
-                rm -= 1
-            else:
-                self.users[key].recieveTransaction(txn)
 
     def grind(self):
         # Gets all users on the network to try to work out the next block that needs to be minted
