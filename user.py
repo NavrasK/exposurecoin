@@ -72,5 +72,9 @@ class User():
         else:
             return False
 
-    def broadcastBlock(self):
-        print("TODO")
+    def recieveTransaction(self, txn):
+        test = k.verify(txn.verification, txn.sender.public_key)
+        if test == 'EXPOSURE':
+            self.block.data.append(txn)
+        else:
+            raise ValueError(self.name + " RECIEVED INVALID TRANSACTION, DISCARDED")

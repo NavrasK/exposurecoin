@@ -12,6 +12,7 @@ import os
 import shutil
 import string
 import random
+import pickle
 
 # NOTE: All files in extern should be totally independent of anything, or at least anything outside
 #       of their group.  Their interconnection should be totally built in this file
@@ -74,6 +75,10 @@ class Client():
         for u in self.users:
             print(u)
 
+    def masterMintBlock(self, block):
+        # When a block is triggered to be minted this updates the master chain with the new block
+        print("TODO")
+
     def newTransaction(self):
         # Sets up the variables for a new transaction and allows it to be sent to everyone (legit) or
         # to fewer than half the users (incomplete, potentially malicious)
@@ -97,26 +102,41 @@ class Client():
         print("Otherwise: Cancel and return to Main Menu")
         mode = str(input("ENTER MODE (or its #) \n>> ").rstrip()).lower()
         if mode == '1' or mode == 'leg':
-            self.legitTxn(sender, recipient, value)
+            self.legitTxn(self.users[sender], self.users[recipient], value)
         elif mode == '2' or mode == 'inc':
-            self.fakeTxn(sender, recipient, value)
+            self.fakeTxn(self.users[sender], self.users[recipient], value)
         else:
             print("\nReturning to Main Menu...")
             return
 
     def legitTxn(self, sender, recipient, value):
         # A legitimate transaction is broadcast to all or at least most users on the "network"
-        print("TODO")
+        ver = k.sign('EXPOSURE', sender.private_key)
+        txn = xp.Transaction(sender, recipient, value, ver)
+        for usr in self.users:
+            usr.recieveTransaction(txn)
+        with open('MASTER/masterblock.xpc', 'wb') as file:
+            pickle.dump(txn, file)
 
     def fakeTxn(self, sender, recipient, value):
         # An illigitimate transaction is broadcast between the sender and recipient, and less than half the 
         # rest of the network.  This could be due to software glitches or malicious.  Either way it should
         # be handled as an invalid transaction by the users over time
-        print("TODO")
-
-    def broadcastTransaction(self, sendto):
-        # Broadcasts the transaction details to users in sendto
-        print("TODO")
+        ver = k.sign('EXPOSURE', sender.private_key)
+        txn = xp.Transaction(sender, recipient, value, ver)
+        keys = list(self.users.keys())
+        sender.recieveTransaction(txn)
+        recipient.recieveTransaction(txn)
+        keys.remove(sender.name)
+        keys.remove(recipient.name)
+        rm = (len(keys)-2) / 2
+        random.shuffle(keys)
+        for key in keys:
+            if (key != sender.name or key != recipient.name) and rm > 0:
+                # Causes the transaction not to be sent to approx. half the users
+                rm -= 1
+            else:
+                self.users[key].recieveTransaction(txn)
 
     def grind(self):
         # Gets all users on the network to try to work out the next block that needs to be minted

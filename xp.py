@@ -31,10 +31,11 @@ class XP():
         return trxlist
 
 class Transaction():
-    def __init__(self, sender, recipient, quantity):
+    def __init__(self, sender, recipient, quantity, verification):
         self.sender = sender
         self.recipient = recipient
-        self.quantity = int(quantity)
+        self.quantity = quantity
+        self.verification = verification
 
     def getTransaction(self):
         # Returns a dictionary with two entries, showing that the sender loses as much currency
