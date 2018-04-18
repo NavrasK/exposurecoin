@@ -69,10 +69,16 @@ class User():
 
     def grindXP(self, difficulty):
         # "Grinding" XP is like mining bitcoin, it's a proof of work system
+        # A certain average number of calculations are required, and the faster the user
+        # completes them the more likely they are to get the reward for being the first
+        # This puts a barrier up so one person will have a harder time spamming the network (in theory)
+        # however in this proof of concept, this doesn't work in that, as it is purely local and each
+        # user takes turn trying to guess, so spamming the network would be a "viable" scam
         seq = '0' * difficulty
         nonce = k.generateNonce()
         hashtry = k.hash(self.block, nonce)
         if hashtry[0:difficulty] == seq:
+            # If the hash is approprite it saves the new values and waits for further instruction
             self.block.timestamp = time.time()
             self.block.minted = True
             self.block.nonce = nonce

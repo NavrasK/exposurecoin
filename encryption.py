@@ -3,10 +3,10 @@ import random
 import hashlib
     
 def generateNonce():
-    # Generate a random 1024 byte sequence it sequence to combine with hashes
+    # Generate a random 256 byte sequence it sequence to combine with hashes
     s = ''
-    for _ in range(1024):
-        s += random.randint(0,15)
+    for _ in range(256):
+        s += str(random.randint(0,15))
     return int(s)
 
 def pair():
