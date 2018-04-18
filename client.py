@@ -41,7 +41,7 @@ class Client():
 
     def spinner(self, length = None, step = None):
         # Displays a spinning cursor for improved user experience and to show that the process is working
-        # when performing a long action such as loading users or mining a block
+        # when performing a long action such as mining a block
         if step == None:
             t = time.time()
             while time.time() - t < length:
@@ -53,7 +53,7 @@ class Client():
             cursor = ['-', '\\', '|', '/']
             sys.stdout.write('\r{}'.format(cursor[step]))
             sys.stdout.flush()
-            time.sleep(0.01)
+            time.sleep(0.02)
         sys.stdout.write('\r')
 
     def loginExisting(self):
@@ -176,7 +176,6 @@ class Client():
             step += 1
             if step > 3:
                 step = 0
-            self.spinner(step = step)
             random.shuffle(keys)
             for key in keys:
                 complete = self.users[key].grindXP(difficulty)
@@ -194,18 +193,6 @@ class Client():
             if user != 'MASTER':
                 print("TODO")
         time.sleep(5)
-
-    def experimentalGrind(self):
-        # Multithreading test, untested and will be unused
-        pool = ThreadPool(4)
-        r = pool.map(self.userGrind, self.users)
-
-    def userGrind(self, user):
-        # Multithreading test, ignore
-        complete = False
-        while not complete:
-            complete = self.users[user].grindXP()
-        return {user : self.users[user].block.timestamp}
 
     def view(self):
         # Base function for viewing information on a user or the master set
