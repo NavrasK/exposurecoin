@@ -21,12 +21,15 @@ class User():
 
     def getRestoreKeys(self):
         # Retreives or generates and stores a public private key pair
+        # Note that in this system the usage of the public and private keys are switched.
+        # This is because the sender encrypts their message such that anyone can decrypt it with
+        # their key to verify that it was them who sent it
         if not os.path.exists('users/'+self.id):
             os.makedirs('users/'+self.id)
         with open('users/'+self.id+'/'+self.name+'.xpc', 'wb+') as file:
             file.seek(0)
             if not file.read(1):
-                self.public_key, self.private_key = k.pair()
+                self.private_key, self.public_key = k.pair()
                 pickle.dump(self.public_key, file)
                 pickle.dump(self.private_key, file)
             else:
@@ -49,10 +52,16 @@ class User():
         with open('MASTER/masterblock.xpc', 'r') as file:
             ind = int(file.readline())
             prev_hash = file.readline()
-            data = []
-            for _ in file:
-                data.append(pickle.load(file))
-            return ind, prev_hash, data
+        data = []
+        with open('MASTER/mastertransactions.xpc', 'r') as file:
+            if file.read(1):
+                file.seek(0)
+                while True:
+                    try:
+                        data.append(pickle.load(file))
+                    except EOFError:
+                        break
+        return ind, prev_hash, data
 
     def newBlock(self, ind, prev_hash, data):
         # Creates a new block for the user
@@ -75,6 +84,8 @@ class User():
     def recieveTransaction(self, txn):
         test = k.verify(txn.verification, txn.sender.public_key)
         if test == 'EXPOSURE':
+            print("\n" + self.name + " ACKNOWLEDDGES THAT " + txn.recipient.name + " RECIEVED " 
+                  + str(txn.quantity) + " " + test + "coin from " + txn.sender.name)
             self.block.data.append(txn)
         else:
             raise ValueError(self.name + " RECIEVED INVALID TRANSACTION, DISCARDED")

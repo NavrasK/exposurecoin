@@ -54,6 +54,9 @@ class Client():
         # Creates or "logs in" a user by creating and accessing files that represent that user
         if uname == None:
             uname = str(input("Enter Username: ").rstrip())
+            if uname in self.users:
+                print("USER ALREADY LOGGED IN")
+                return
         self.users[uname] = u.User(uname)
 
     def generateUsers(self):
@@ -108,14 +111,15 @@ class Client():
         else:
             print("\nReturning to Main Menu...")
             return
+        time.sleep(5)
 
     def legitTxn(self, sender, recipient, value):
         # A legitimate transaction is broadcast to all or at least most users on the "network"
         ver = k.sign('EXPOSURE', sender.private_key)
         txn = xp.Transaction(sender, recipient, value, ver)
         for usr in self.users:
-            usr.recieveTransaction(txn)
-        with open('MASTER/masterblock.xpc', 'wb') as file:
+            self.users[usr].recieveTransaction(txn)
+        with open('MASTER/mastertransactions.xpc', 'wb') as file:
             pickle.dump(txn, file)
 
     def fakeTxn(self, sender, recipient, value):
@@ -129,11 +133,12 @@ class Client():
         recipient.recieveTransaction(txn)
         keys.remove(sender.name)
         keys.remove(recipient.name)
-        rm = (len(keys)-2) / 2
+        # Note that this will not work if there is fewer than 5 users on the network
+        rm = len(keys) / 2 + 2
         random.shuffle(keys)
         for key in keys:
-            if (key != sender.name or key != recipient.name) and rm > 0:
-                # Causes the transaction not to be sent to approx. half the users
+            if rm > 0:
+                # Causes the transaction to NOT be sent to more than half the users
                 rm -= 1
             else:
                 self.users[key].recieveTransaction(txn)
@@ -143,7 +148,7 @@ class Client():
         difficulty = 4
         # Requires n 0's in a row at the beginning of the hased value to be accepted
         # Each guess is random, and there is a 1/(16^n) chance per guess that the hash contains the sequence
-
+        #
         # Each user is iterated over once per loop in a random order.  This is because it is run locally
         # and threading is not a component of this course, thus it would be otherwise impossible
         # to demonstrate the race for users to calculate the next block, an important part of the blockchain
@@ -215,6 +220,7 @@ class Client():
                 sure = str(input("ARE YOU SURE (this cannot be undone) Y/N \n>> ").rstrip()).lower()
                 if sure == 'y':
                     shutil.rmtree('users')
+                    self.users = {}
                     print("USERS DELETED")
                     continue
                 else:
