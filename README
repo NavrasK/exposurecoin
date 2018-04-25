@@ -1,6 +1,6 @@
 EXPOSUREcoin
 CMPUT 275 Final Project, April 2018
-Created by Navras Kamal (1505463)
+Created by Navras Kamal (1505463) & Jesse Goertzen (1505959)
 
 Description:
 A cryptocurrency simulator designed to showcase the ideas behind the blockchain system employed by
@@ -8,7 +8,7 @@ currencies such as Bitcoin.  The project is built in Python3 and is a control sy
 cryptocurrency network.
 
 Instructions:
-Clone this project from my github onto your machine
+Clone this project from my GitHub onto your machine
 Run RUNME.py in the terminal with "python RUNME.py" while in the main directory for this project
 to begin the program.  
 Follow on screen prompts and read below for information on how to use this tool.
@@ -42,24 +42,24 @@ where it is used as an intermediary for other forms of currency, in which case a
 you owe money to the users with positive balances.  This is the case that is used in EXPOSUREcoin.
 
 That doesn't yet mean that the system is foolproof, however.  It is still possible to cheat the system, 
-accidentally or on purpose, if not all users recieve your signed transaction.  In a malicious case, for 
+accidentally or on purpose, if not all users receive your signed transaction.  In a malicious case, for 
 example, lets say that there is three people on the network.  Alice has 10XP, and Bob, Charles
 have 0XP.  Alice creates and signs a transaction, sending 10XP to Bob, but doesn't transmit that data to
 Charles.  She then creates and signs another transaction, sending 10XP to Charles, but doesn't tell Bob.  
 In this case both Bob and Charles think that Alice has 0XP and that they each have 10, when in reality
 Alice should have -10XP.  In this case Alice has "double-spent" her currency, which if it was allowed
-would wreck havok on a system where you didn't trust the users.  
+would wreck havoc on a system where you didn't trust the users.  
 
 To solve this issue there is the idea of the "Blockchain", which is the whole point behind the system.
 Essentially each "block" in the blockchain is a set of transactions along with some other data.  Once
-a condition is met (ie enough time has passed or a number of transactions have been recieved) the user
+a condition is met (ie enough time has passed or a number of transactions have been received) the user
 will take all their transactions and turn them into a block.  Part of this process involves using the 
 data from a block immediately prior, and this combination creates the "chain" part of the blockchain,
 in that all the blocks are interlinked and can be followed back to a root block, generally known as the
 Genesis block, which contains the initial state of the network.  
 
 The contents of the block are combined with a random value (known as a nonce) and is cryptographically hashed.
-The hash is entrirely dependent on the contents of the block, and thus any changes to the contents would 
+The hash is entirely dependent on the contents of the block, and thus any changes to the contents would 
 change the hash.  This process is repeated many times until the hash meets a certain requirement.  In 
 EXPOSUREcoin and Bitcoin this requirement is that the start of the hash string must contain some number of
 zeros in a row.  The more zeros required in a row, the harder it is to find the proper nonce.  The chance
@@ -72,9 +72,9 @@ people to lend their computational power to the network.  The reason for this sy
 checking is for "Proof of Work".  One of the assumptions of the blockchain system is that there should
 always be fewer than a third of the users trying to "scam" the system at any given time.  With this Proof
 of Work system it means that it is much more likely for a legitimate block to be minted before an 
-illegitimate one, statiscally.  Thus over time the chain of correct chain will grow faster.
+illegitimate one, statically.  Thus over time the chain of correct chain will grow faster.
 
-If there is ever a discrepancy between two or more blocks that all referene a specific previous block there
+If there is ever a discrepancy between two or more blocks that all reference a specific previous block there
 is a conflict, and this conflict can be resolved thanks to proof of work.  Assuming there are more honest
 users than scammers the conflicts can be resolved by simply waiting until one of the lines becomes longer
 than the others by a large enough margin, then that chain is "accepted" and the rest are discarded.  
@@ -84,7 +84,7 @@ is a lot more simplified, and has a few alternative design choices included.  Fi
 cryptocurrency, it is purely a simulation that can help explain it and allow you to interact with the ideas.
 Secondly, it is purely local, and you only need to run the program once to simulate the network.  When you
 first run the program it will check your operating system then continue to the main code.  There it will 
-load any previously exisiting users into the network.  Once it is finished initializing you can enter 
+load any previously existing users into the network.  Once it is finished initializing you can enter 
 commands to control the system.  To exit enter 0 or 'exit'.
 
 On startup a specific user is created called MASTER.  Master is a special user unique to this demonstration.
@@ -107,7 +107,7 @@ Transaction lets you create either a legitimate or illegitimate transaction betw
 You enter the appropriate data and you can then chose if the transaction is legitimate or not.  If it is,
 it is broadcast to all users.  If it is not it is sent to only the sender and recipient.  Over time this
 transaction should be weeded out by the network.  Note that if you spam the incomplete transaction function
-it could cause unintented behaviour, as it is assumed that at most a relatively small number of transactions 
+it could cause unintended behavior, as it is assumed that at most a relatively small number of transactions 
 on the network are false.  
 
 View lets you see the current state of the master list or of a user, which allows you to monitor how they
@@ -116,28 +116,28 @@ what they believe the current state of the network is (TODO).  When you view the
 the true current state of the network.  
 
 Mint allows you to manually cause all users to begin trying to mint the next block.  Due to the scope of this
-project, this is the most abstracted parts.  As all users exist on one machine, and multithreading isn't 
+project, this is the most abstracted parts.  As all users exist on one machine, and multi-threading isn't 
 a part of the course, a workaround is being used.  Each user is lined up at random and will try one at a time
 to guess the nonce.  If they do they are set aside with their order of completion stored and wait until all
 users are done.  This can take a while, and contrary to normal systems it will take LONGER for more users.
 Some settings you can tweak to modify the time it takes to mint the blocks: TODO. Note that the easier it is
 the more likely that an invalid block will be accepted by chance.
 
-Again, as this project is not handling asychronous code all users work one by one until all are done.  
-Finally all users will broadcast their blocks, and recieve the other users blocks.  In addition, the user
+Again, as this project is not handling asynchronous code all users work one by one until all are done.  
+Finally all users will broadcast their blocks, and receive the other users blocks.  In addition, the user
 who finished first will get a transaction added to the next block by the MASTER user, awarding them with
 currency from nowhere (debt from Master is never settled), which is how currency is created.  In this way
 the network will grow over time.  
 
-All the users broadcast their blocks in the order they were minted.  It is assumed that ALL users recieve ALL 
-blocks.  They are compared, and check if there is any inconsitencies between the blocks.  If they are all 
+All the users broadcast their blocks in the order they were minted.  It is assumed that ALL users receive ALL 
+blocks.  They are compared, and check if there is any inconsistencies between the blocks.  If they are all 
 the same (they have the same hash) the duplicates are discarded and it is added to their chain.  If they are
-not, then duplicates are discared and conflicting blocks are held until the next set comes in.  
+not, then duplicates are discarded and conflicting blocks are held until the next set comes in.  
 If there is a majority of users who have the same block then outliers are discarded.  Otherwise users always
 trust their own block at this point.  Once the next set arrives (based on every users own "previous block")
 another comparison is run, and if the first block that was minted is in a chain with one of the conflicting 
 blocks then it is taken as the new accepted chain and all other conflicting blocks are discarded.  Any 
-other incoming blocks that refrence discarded blocks are also discarded.  At this point, that layer of conflict
+other incoming blocks that reference discarded blocks are also discarded.  At this point, that layer of conflict
 is cleared, and the chain continues like this.  TODO
 
 Finally rm lets you reset the entire system, chain and deletes all users.  Use this if you want to reduce the
